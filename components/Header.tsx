@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { href: "/books", label: "Books" },
   { href: "/arts", label: "Arts" },
   { href: "/consulting", label: "Consulting" },
+  { href: "/board-advisory", label: "Board Advisory" },
   { href: "/insights", label: "Insights" },
   { href: "/about", label: "About" },
 ];
@@ -59,7 +60,7 @@ export default function Header() {
         Jayburtt Dijkhoff
       </Link>
 
-      <nav className="main-nav" style={{ display: "flex", alignItems: "center", gap: 18 }}>
+      <nav className="main-nav" style={{ display: "flex", alignItems: "center", gap: 14 }}>
         {NAV_LINKS.map((link) => {
           const active = pathname === link.href;
           return (

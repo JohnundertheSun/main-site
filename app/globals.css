@@ -434,8 +434,9 @@ select:focus-visible {
 .mobile-nav.is-open a:nth-child(5) { transition-delay: 0.15s; }
 .mobile-nav.is-open a:nth-child(6) { transition-delay: 0.18s; }
 .mobile-nav.is-open a:nth-child(7) { transition-delay: 0.21s; }
+.mobile-nav.is-open a:nth-child(8) { transition-delay: 0.24s; }
 
-@media (max-width: 880px) {
+@media (max-width: 1040px) {
   header nav.main-nav {
     display: none !important;
   }
