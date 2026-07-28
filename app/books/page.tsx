@@ -22,7 +22,7 @@ export default function BooksPage() {
 
       <section style={{ padding: "60px 24px 100px" }}>
         <div
-          className="container grid-2"
+          className="container grid-2 reveal"
           style={{
             maxWidth: 1040,
             display: "grid",
@@ -35,13 +35,15 @@ export default function BooksPage() {
             boxShadow: "0 20px 50px #00000012",
           }}
         >
-          <Image
-            src="/images/book-cover.webp"
-            alt="Derechonan di Pashent book cover"
-            width={640}
-            height={1024}
-            style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 14, boxShadow: "0 20px 40px #00000022" }}
-          />
+          <div className="img-zoom" style={{ borderRadius: 14 }}>
+            <Image
+              src="/images/book-cover.webp"
+              alt="Derechonan di Pashent book cover"
+              width={640}
+              height={1024}
+              style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 14, boxShadow: "0 20px 40px #00000022" }}
+            />
+          </div>
           <div>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: 30, fontWeight: 600, margin: "0 0 10px" }}>
               Derechonan di Pashent
@@ -74,7 +76,7 @@ export default function BooksPage() {
         </div>
       </section>
 
-      <section style={{ background: "var(--color-teal)", padding: "90px 24px", textAlign: "center" }}>
+      <section className="reveal" style={{ background: "var(--color-teal)", padding: "90px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#d9f3ec", marginBottom: 16 }}>
             Coming Next

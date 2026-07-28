@@ -75,13 +75,13 @@ export default function ConsultingPage() {
       </section>
 
       <section
-        className="container"
+        className="container reveal reveal-stagger"
         style={{ padding: "0 24px 90px", display: "flex", flexDirection: "column", gap: 24 }}
       >
         {SERVICES.map((s) => (
           <div
             key={s.title}
-            className="grid-2"
+            className="grid-2 service-card"
             style={{
               background: "var(--color-offwhite)",
               borderRadius: 24,

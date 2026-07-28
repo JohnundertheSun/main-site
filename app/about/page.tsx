@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SpotlightCard from "@/components/SpotlightCard";
 
 export const metadata: Metadata = { title: "About — Jayburtt Dijkhoff" };
 
@@ -31,13 +32,15 @@ export default function AboutPage() {
           marginInline: "auto",
         }}
       >
-        <Image
-          src="/images/portrait-speaking.png"
-          alt="Jayburtt Dijkhoff, PhD"
-          width={640}
-          height={688}
-          style={{ width: "100%", height: 520, objectFit: "cover", borderRadius: 24, boxShadow: "0 24px 48px #00000022" }}
-        />
+        <div className="img-zoom" style={{ borderRadius: 24 }}>
+          <Image
+            src="/images/portrait-speaking.png"
+            alt="Jayburtt Dijkhoff, PhD"
+            width={640}
+            height={688}
+            style={{ width: "100%", height: 520, objectFit: "cover", borderRadius: 24, boxShadow: "0 24px 48px #00000022" }}
+          />
+        </div>
         <div>
           <div className="eyebrow" style={{ marginBottom: 14 }}>
             About
@@ -88,7 +91,7 @@ export default function AboutPage() {
       </section>
 
       {/* BIO */}
-      <section style={{ maxWidth: 800, margin: "0 auto", padding: "0 24px 90px" }}>
+      <section className="reveal" style={{ maxWidth: 800, margin: "0 auto", padding: "0 24px 90px" }}>
         <p style={{ fontSize: 17, lineHeight: 1.85, color: "#3a352c", margin: "0 0 22px" }}>
           Jayburtt&apos;s work sits at the intersection of healthcare practice, regulation, and
           lived reality. A health scientist by training, he has spent years inside the systems he
@@ -115,16 +118,16 @@ export default function AboutPage() {
           Credentials
         </h2>
         <div
-          className="container grid-4"
+          className="container grid-4 reveal reveal-stagger"
           style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24 }}
         >
           {CREDENTIALS.map((c) => (
-            <div key={c.title} style={{ background: "#2a251a", borderRadius: 20, padding: 24 }}>
+            <SpotlightCard key={c.title} className="credential-card" style={{ background: "#2a251a", borderRadius: 20, padding: 24 }}>
               <div style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 600, color: "white", marginBottom: 6 }}>
                 {c.title}
               </div>
               <div style={{ fontSize: 13, color: "#a8a49a" }}>{c.subtitle}</div>
-            </div>
+            </SpotlightCard>
           ))}
         </div>
       </section>

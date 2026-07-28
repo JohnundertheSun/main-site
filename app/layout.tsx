@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans, Newsreader } from "next/font/google";
+import ScrollReveal from "@/components/ScrollReveal";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -30,7 +31,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${ibmPlexSans.variable} ${newsreader.variable}`}>
-      <body>{children}</body>
+      <body>
+        <noscript>
+          <style>{`.reveal { opacity: 1 !important; transform: none !important; }`}</style>
+        </noscript>
+        {children}
+        <ScrollReveal />
+      </body>
     </html>
   );
 }

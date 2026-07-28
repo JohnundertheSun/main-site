@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -16,10 +16,21 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <header
+      className={`site-header${scrolled ? " is-scrolled" : ""}`}
       style={{
         display: "flex",
         alignItems: "center",
@@ -35,6 +46,7 @@ export default function Header() {
     >
       <Link
         href="/"
+        onClick={() => setOpen(false)}
         style={{
           fontFamily: "var(--font-display)",
           fontSize: 18,
@@ -54,7 +66,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="nav-link"
+              className={`nav-link${active ? " is-active" : ""}`}
               style={{
                 fontSize: 13.5,
                 fontWeight: active ? 600 : 500,
@@ -88,6 +100,7 @@ export default function Header() {
         </div>
         <Link
           href="/contact"
+          onClick={() => setOpen(false)}
           className="btn btn-primary header-cta"
           style={{ padding: "13px 28px", fontSize: 14, whiteSpace: "nowrap" }}
         >
@@ -98,7 +111,7 @@ export default function Header() {
           type="button"
           aria-label="Toggle menu"
           aria-expanded={open}
-          className="hamburger"
+          className={`hamburger${open ? " is-open" : ""}`}
           onClick={() => setOpen((v) => !v)}
           style={{
             flexDirection: "column",
@@ -111,31 +124,19 @@ export default function Header() {
             cursor: "pointer",
           }}
         >
-          <span style={{ display: "block", width: 22, height: 2, background: "var(--color-ink)" }} />
-          <span style={{ display: "block", width: 22, height: 2, background: "var(--color-ink)" }} />
-          <span style={{ display: "block", width: 22, height: 2, background: "var(--color-ink)" }} />
+          <span className="hamburger-line" style={{ display: "block", width: 22, height: 2, background: "var(--color-ink)" }} />
+          <span className="hamburger-line" style={{ display: "block", width: 22, height: 2, background: "var(--color-ink)" }} />
+          <span className="hamburger-line" style={{ display: "block", width: 22, height: 2, background: "var(--color-ink)" }} />
         </button>
       </div>
 
-      {open && (
-        <nav
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            right: 0,
-            background: "var(--color-cream)",
-            borderBottom: "1px solid var(--color-cream-line)",
-            display: "flex",
-            flexDirection: "column",
-            padding: "12px 24px 20px",
-            gap: 4,
-          }}
-        >
+      <nav className={`mobile-nav${open ? " is-open" : ""}`} aria-hidden={!open}>
+        <div>
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
+              tabIndex={open ? 0 : -1}
               onClick={() => setOpen(false)}
               style={{
                 fontSize: 15,
@@ -147,8 +148,8 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-        </nav>
-      )}
+        </div>
+      </nav>
     </header>
   );
 }

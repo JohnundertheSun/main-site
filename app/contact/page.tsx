@@ -39,13 +39,13 @@ export default function ContactPage() {
 
       <section style={{ padding: "0 24px 100px" }}>
         <div
-          className="container grid-2"
+          className="container grid-2 reveal"
           style={{ maxWidth: 1040, display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 56 }}
         >
           <ContactForm />
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             {INFO.map((item) => (
-              <div key={item.label} style={{ background: "#ece0cb", borderRadius: 20, padding: 28 }}>
+              <div key={item.label} className="service-card" style={{ background: "#ece0cb", borderRadius: 20, padding: 28 }}>
                 <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 14 }}>{item.label}</div>
                 <div style={{ fontSize: 15, color: "var(--color-muted)" }}>{item.value}</div>
               </div>

@@ -69,7 +69,7 @@ export default function InsightsPage() {
       </section>
 
       <section
-        className="container grid-3"
+        className="container grid-3 reveal reveal-stagger"
         style={{ padding: "0 24px 90px", display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 26 }}
       >
         {ARTICLES.map((post) => (

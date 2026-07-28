@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SpotlightCard from "@/components/SpotlightCard";
 
 export const metadata: Metadata = { title: "Speaking — Jayburtt Dijkhoff" };
 
@@ -74,17 +75,19 @@ export default function SpeakingPage() {
             Check Availability
           </Link>
         </div>
-        <Image
-          src="/images/portrait-speaking.png"
-          alt="Jayburtt Dijkhoff"
-          width={640}
-          height={688}
-          style={{ width: "100%", height: 440, objectFit: "cover", borderRadius: 24, boxShadow: "0 24px 48px #00000022" }}
-        />
+        <div className="img-zoom" style={{ borderRadius: 24 }}>
+          <Image
+            src="/images/portrait-speaking.png"
+            alt="Jayburtt Dijkhoff"
+            width={640}
+            height={688}
+            style={{ width: "100%", height: 440, objectFit: "cover", borderRadius: 24, boxShadow: "0 24px 48px #00000022" }}
+          />
+        </div>
       </section>
 
       {/* SIGNATURE TALKS */}
-      <section style={{ background: "var(--color-ink)", padding: "90px 24px" }}>
+      <section className="reveal" style={{ background: "var(--color-ink)", padding: "90px 24px" }}>
         <h2
           style={{
             fontFamily: "var(--font-display)",
@@ -99,13 +102,13 @@ export default function SpeakingPage() {
         </h2>
         <div className="container grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}>
           {TALKS.map((talk) => (
-            <div key={talk.n} style={{ background: "#2a251a", borderRadius: 20, padding: 28 }}>
+            <SpotlightCard key={talk.n} className="talk-card" style={{ background: "#2a251a", borderRadius: 20, padding: 28 }}>
               <div style={{ fontFamily: "var(--font-display)", fontSize: 30, color: talk.color, marginBottom: 12 }}>
                 {talk.n}
               </div>
               <h3 style={{ fontSize: 18, fontWeight: 600, color: "white", margin: "0 0 10px" }}>{talk.title}</h3>
               <p style={{ fontSize: 14, lineHeight: 1.6, color: "#a8a49a" }}>{talk.body}</p>
-            </div>
+            </SpotlightCard>
           ))}
         </div>
       </section>
@@ -121,7 +124,7 @@ export default function SpeakingPage() {
               However your audience learns best.
             </h2>
           </div>
-          <div className="grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}>
+          <div className="grid-3 reveal reveal-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}>
             {FORMATS.map((f) => (
               <div
                 key={f.title}

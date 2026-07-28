@@ -243,18 +243,9 @@ export default function Home() {
           maxWidth: 1284,
           marginInline: "auto",
         }}
-        className="grid-2"
+        className="grid-2 reveal"
       >
-        <div style={{ position: "relative" }}>
-          <div
-            style={{
-              position: "absolute",
-              inset: "-20px -20px 20px 20px",
-              background: "#c65a3518",
-              borderRadius: "63% 37% 54% 46% / 43% 47% 53% 57%",
-              zIndex: 0,
-            }}
-          />
+        <div className="img-zoom" style={{ borderRadius: 24 }}>
           <Image
             src="/images/portrait-speaking.png"
             alt="Jayburtt Dijkhoff"
@@ -267,8 +258,6 @@ export default function Home() {
               objectPosition: "center",
               background: "var(--color-cream)",
               borderRadius: 24,
-              position: "relative",
-              zIndex: 1,
               boxShadow: "0 24px 48px #00000022",
             }}
           />
@@ -351,7 +340,7 @@ export default function Home() {
             </h2>
           </div>
           <div
-            className="grid-4"
+            className="grid-4 reveal reveal-stagger"
             style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24 }}
           >
             {METHOD_STEPS.map((step) => (
@@ -381,7 +370,7 @@ export default function Home() {
             Built for individuals and institutions alike.
           </h2>
         </div>
-        <div className="container grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
+        <div className="container grid-2 reveal reveal-stagger" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
           <div style={{ background: "var(--color-navy)", borderRadius: 28, padding: 44, color: "white" }}>
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, margin: "0 0 16px" }}>
               For Individuals
@@ -428,7 +417,7 @@ export default function Home() {
           </h2>
         </div>
         <div
-          className="container grid-3"
+          className="container grid-3 reveal reveal-stagger"
           style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
         >
           {OFFERINGS.map((item) => (
@@ -481,6 +470,7 @@ export default function Home() {
 
       {/* PULL QUOTE */}
       <section
+        className="reveal"
         style={{ background: "var(--color-navy)", padding: "100px 24px", textAlign: "center" }}
       >
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
@@ -531,7 +521,7 @@ export default function Home() {
           </Link>
         </div>
         <div
-          className="container grid-2"
+          className="container grid-2 reveal"
           style={{
             display: "grid",
             gridTemplateColumns: "0.5fr 1fr",
@@ -543,13 +533,15 @@ export default function Home() {
             boxShadow: "0 20px 50px #00000012",
           }}
         >
-          <Image
-            src="/images/book-cover.webp"
-            alt="Derechonan di Pashent book cover"
-            width={640}
-            height={1024}
-            style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 14, boxShadow: "0 20px 40px #00000022" }}
-          />
+          <div className="img-zoom" style={{ borderRadius: 14 }}>
+            <Image
+              src="/images/book-cover.webp"
+              alt="Derechonan di Pashent book cover"
+              width={640}
+              height={1024}
+              style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 14, boxShadow: "0 20px 40px #00000022" }}
+            />
+          </div>
           <div>
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: 27, fontWeight: 600, margin: "0 0 12px" }}>
               Derechonan di Pashent
@@ -575,7 +567,7 @@ export default function Home() {
       {/* ARTS TEASER */}
       <section style={{ background: "var(--color-teal)", padding: "100px 24px" }}>
         <div
-          className="container grid-2"
+          className="container grid-2 reveal"
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
         >
           <div style={{ position: "relative" }}>
@@ -588,23 +580,23 @@ export default function Home() {
                 zIndex: 0,
               }}
             />
-            <Image
-              src="/images/portrait-arts.png"
-              alt="Jayburtt Dijkhoff"
-              width={1024}
-              height={1024}
-              style={{
-                width: "100%",
-                height: 380,
-                objectFit: "contain",
-                objectPosition: "center",
-                background: "var(--color-teal-dark)",
-                borderRadius: 24,
-                position: "relative",
-                zIndex: 1,
-                boxShadow: "0 24px 48px #00000030",
-              }}
-            />
+            <div className="img-zoom" style={{ position: "relative", zIndex: 1, borderRadius: 24 }}>
+              <Image
+                src="/images/portrait-arts.png"
+                alt="Jayburtt Dijkhoff"
+                width={1024}
+                height={1024}
+                style={{
+                  width: "100%",
+                  height: 380,
+                  objectFit: "contain",
+                  objectPosition: "center",
+                  background: "var(--color-teal-dark)",
+                  borderRadius: 24,
+                  boxShadow: "0 24px 48px #00000030",
+                }}
+              />
+            </div>
           </div>
           <div>
             <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#d9f3ec", marginBottom: 16 }}>
@@ -631,7 +623,7 @@ export default function Home() {
       {/* CONSULTING */}
       <section style={{ background: "var(--color-cream)", padding: "100px 24px" }}>
         <div
-          className="container grid-2"
+          className="container grid-2 reveal"
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
         >
           <div>
@@ -708,7 +700,7 @@ export default function Home() {
           </Link>
         </div>
         <div
-          className="container grid-3"
+          className="container grid-3 reveal reveal-stagger"
           style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
         >
           {INSIGHTS.map((post) => (
@@ -750,7 +742,7 @@ export default function Home() {
       </section>
 
       {/* MISSION */}
-      <section style={{ background: "var(--color-ink)", padding: "100px 24px" }}>
+      <section className="reveal" style={{ background: "var(--color-ink)", padding: "100px 24px" }}>
         <div style={{ maxWidth: 820, margin: "0 auto", textAlign: "center" }}>
           <div className="eyebrow" style={{ marginBottom: 16 }}>
             The Mission

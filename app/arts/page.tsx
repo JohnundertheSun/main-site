@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SpotlightCard from "@/components/SpotlightCard";
 
 export const metadata: Metadata = { title: "Arts — Jayburtt Dijkhoff" };
 
@@ -59,26 +60,26 @@ export default function ArtsPage() {
               zIndex: 0,
             }}
           />
-          <Image
-            src="/images/portrait-arts.png"
-            alt="Jayburtt Dijkhoff"
-            width={1024}
-            height={1024}
-            style={{
-              width: "100%",
-              height: 440,
-              objectFit: "cover",
-              borderRadius: 24,
-              position: "relative",
-              zIndex: 1,
-              boxShadow: "0 24px 48px #00000022",
-            }}
-          />
+          <div className="img-zoom" style={{ position: "relative", zIndex: 1, borderRadius: 24 }}>
+            <Image
+              src="/images/portrait-arts.png"
+              alt="Jayburtt Dijkhoff"
+              width={1024}
+              height={1024}
+              style={{
+                width: "100%",
+                height: 440,
+                objectFit: "cover",
+                borderRadius: 24,
+                boxShadow: "0 24px 48px #00000022",
+              }}
+            />
+          </div>
         </div>
       </section>
 
       {/* POETRY */}
-      <section style={{ background: "var(--color-ink)", padding: "90px 24px" }}>
+      <section className="reveal" style={{ background: "var(--color-ink)", padding: "90px 24px" }}>
         <div className="container">
           <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--color-accent)", marginBottom: 16, textAlign: "center" }}>
             Poetry
@@ -86,21 +87,21 @@ export default function ArtsPage() {
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, color: "white", textAlign: "center", margin: "0 0 48px" }}>
             Selected Verses
           </h2>
-          <div className="grid-2" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 24 }}>
+          <div className="grid-2 reveal reveal-stagger" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 24 }}>
             {VERSES.map((verse) => (
-              <div key={verse} style={{ background: "#2a251a", borderRadius: 20, padding: 36 }}>
+              <SpotlightCard key={verse} className="talk-card" style={{ background: "#2a251a", borderRadius: 20, padding: 36 }}>
                 <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 19, lineHeight: 1.8, color: "#e8e3d6", margin: "0 0 18px" }}>
                   {verse}
                 </p>
                 <div style={{ fontSize: 13, color: "#a8a49a" }}>From an upcoming collection</div>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>
       </section>
 
       {/* MUSIC TEASER */}
-      <section style={{ padding: "90px 24px" }}>
+      <section className="reveal" style={{ padding: "90px 24px" }}>
         <div
           className="container grid-2"
           style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
@@ -134,7 +135,7 @@ export default function ArtsPage() {
       </section>
 
       {/* NOTE */}
-      <section style={{ background: "var(--color-cream)", padding: "0 24px 100px" }}>
+      <section className="reveal" style={{ background: "var(--color-cream)", padding: "0 24px 100px" }}>
         <div
           style={{
             maxWidth: 800,
