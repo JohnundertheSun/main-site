@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SpotlightCard from "@/components/SpotlightCard";
 
 export const metadata: Metadata = { title: "Consulting — Jayburtt Dijkhoff" };
 
@@ -72,6 +73,41 @@ export default function ConsultingPage() {
           Direct engagement with Jayburtt for institutions and Dutch healthcare providers
           navigating governance, recognition, and quality systems across the Kingdom.
         </p>
+      </section>
+
+      <section className="reveal" style={{ padding: "0 24px 56px" }}>
+        <SpotlightCard
+          className="talk-card"
+          style={{
+            maxWidth: 1140,
+            margin: "0 auto",
+            background: "var(--color-navy)",
+            borderRadius: 28,
+            padding: 44,
+            color: "white",
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 28,
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div style={{ maxWidth: 620 }}>
+            <div style={{ fontSize: 12.5, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#9fb2ca", marginBottom: 12 }}>
+              Featured: For Boards &amp; Executive Teams
+            </div>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 700, margin: "0 0 12px" }}>
+              Board Advisory &amp; Coaching
+            </h2>
+            <p style={{ fontSize: 15, lineHeight: 1.7, color: "#c3d2e4", margin: 0 }}>
+              Risk mitigation, risk identification, and governance coaching for advisory and
+              directive boards, so organizations take control instead of managing risk ad hoc.
+            </p>
+          </div>
+          <Link href="/board-advisory" className="btn btn-white" style={{ padding: "14px 28px", color: "var(--color-navy)", fontSize: 14.5, whiteSpace: "nowrap" }}>
+            Explore Board Advisory →
+          </Link>
+        </SpotlightCard>
       </section>
 
       <section

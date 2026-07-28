@@ -47,6 +47,9 @@ export default function Footer() {
             <Link href="/consulting" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
               Consulting
             </Link>
+            <Link href="/board-advisory" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
+              Board Advisory
+            </Link>
             <Link href="/insights" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
               Insights
             </Link>
