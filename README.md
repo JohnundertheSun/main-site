@@ -31,16 +31,26 @@ Settings → Environment Variables), not committed to the repo:
 
 | Variable | Purpose |
 | --- | --- |
-| `SUPABASE_URL` | Your Supabase project URL (Project Settings → API) |
-| `SUPABASE_SERVICE_ROLE_KEY` | The **service role** key (same page). Server-only — never exposed to the browser. |
-| `ADMIN_PASSWORD` | Password gating `/admin/*`. Pick your own; nothing here needs to match Supabase. |
+| `SUPABASE_URL` | Your Supabase project URL, e.g. `https://<project-ref>.supabase.co` |
+| `SUPABASE_SERVICE_ROLE_KEY` | The **secret** key (`sb_secret_…`, or a legacy `service_role` JWT) from Project Settings → API Keys. Server-only — never exposed to the browser, and never the `sb_publishable_…` key, which RLS will reject. |
+| `ADMIN_PASSWORD` | Password gating `/admin/*`. Pick your own; unrelated to Supabase. |
 
-**One-time setup:**
-1. Create a free project at [supabase.com](https://supabase.com).
-2. In the Supabase SQL Editor, run `supabase/schema.sql` from this repo to create the
-   `program_signups` table.
-3. Copy the Project URL and `service_role` key from Project Settings → API.
-4. Add all three env vars above to the hosting platform, then redeploy.
+### 1. Create the table
+
+Either paste `supabase/migrations/20260728000000_create_program_signups.sql` into the
+Supabase SQL Editor and run it, or apply it with the CLI from your own machine:
+
+```bash
+supabase login
+supabase init                                    # skip if config.toml already exists
+supabase link --project-ref <project-ref>
+supabase db push                                 # applies supabase/migrations/*
+```
+
+### 2. Set the environment variables
+
+Add all three variables above in Vercel → Project → Settings → Environment Variables,
+then redeploy so the new values are picked up.
 
 **How it works right now:** there is no real checkout yet. Visitors fill out the enrollment
 form on `/yabinan-di-poder`, which is saved to the `program_signups` table. Sign in at

@@ -79,7 +79,7 @@ export default async function AdminSignupsPage() {
           >
             Couldn&apos;t load signups: {error}. Make sure <code>SUPABASE_URL</code> and{" "}
             <code>SUPABASE_SERVICE_ROLE_KEY</code> are set, and that the{" "}
-            <code>program_signups</code> table exists (see <code>supabase/schema.sql</code>).
+            <code>program_signups</code> table exists (see <code>supabase/migrations/</code>).
           </div>
         )}
 
