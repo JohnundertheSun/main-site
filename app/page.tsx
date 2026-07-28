@@ -143,7 +143,7 @@ export default function Home() {
               marginBottom: 22,
             }}
           >
-            Speaker · Author · Systems Thinker
+            Speaker · Author · High-Level Consultant
           </div>
           <h1
             style={{
@@ -155,7 +155,7 @@ export default function Home() {
               letterSpacing: "-0.02em",
             }}
           >
-            Nobody should have to fight the system alone.
+            No organization should manage risk alone.
           </h1>
           <p
             style={{
@@ -166,8 +166,9 @@ export default function Home() {
               margin: "0 auto 38px",
             }}
           >
-            I&apos;m Jayburtt Dijkhoff. I spent years inside healthcare and law, and I now help
-            people and organizations navigate both, with confidence, dignity, and power.
+            I&apos;m Jayburtt Dijkhoff. After 13 years inside government and healthcare
+            governance, I now guide and coach advisory and directive boards to take control of
+            risk, before it takes control of them.
           </p>
           <div
             style={{
@@ -178,11 +179,11 @@ export default function Home() {
               flexWrap: "wrap",
             }}
           >
-            <Link href="/speaking" className="btn btn-primary" style={{ padding: "16px 32px", fontSize: 15 }}>
-              Book Me to Speak
+            <Link href="/board-advisory" className="btn btn-primary" style={{ padding: "16px 32px", fontSize: 15 }}>
+              Book a Board Session
             </Link>
-            <Link href="/books" className="btn btn-secondary" style={{ padding: "16px 32px", fontSize: 15 }}>
-              Explore My Books
+            <Link href="/consulting" className="btn btn-secondary" style={{ padding: "16px 32px", fontSize: 15 }}>
+              Explore Consulting
             </Link>
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 18, flexWrap: "wrap" }}>
