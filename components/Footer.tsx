@@ -41,6 +41,9 @@ export default function Footer() {
             <Link href="/books" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
               Books
             </Link>
+            <Link href="/yabinan-di-poder" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
+              Yabinan di Poder
+            </Link>
             <Link href="/arts" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
               Arts
             </Link>
