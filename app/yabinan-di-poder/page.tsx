@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import EnrollForm from "@/components/EnrollForm";
 
 export const metadata: Metadata = {
   title: "Yabinan di Poder — Jayburtt Dijkhoff",
@@ -60,9 +60,9 @@ export default function YabinanDiPoderPage() {
             on your case, from Jayburtt Dijkhoff, PhD.
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary" style={{ padding: "16px 32px", fontSize: 15 }}>
+            <a href="#enroll" className="btn btn-primary" style={{ padding: "16px 32px", fontSize: 15 }}>
               Enroll Now — AWG 50
-            </Link>
+            </a>
             <span style={{ fontSize: 13.5, color: "var(--color-faint)" }}>One-time payment · Lifetime access</span>
           </div>
         </div>
@@ -171,8 +171,8 @@ export default function YabinanDiPoderPage() {
       </section>
 
       {/* PRICING / ENROLL */}
-      <section className="reveal" style={{ background: "var(--color-teal)", padding: "90px 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 560, margin: "0 auto" }}>
+      <section id="enroll" className="reveal" style={{ background: "var(--color-teal)", padding: "90px 24px", scrollMarginTop: 90 }}>
+        <div style={{ maxWidth: 480, margin: "0 auto", textAlign: "center" }}>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: 30, fontWeight: 700, color: "white", margin: "0 0 14px" }}>
             Get your keys of power.
           </h2>
@@ -180,13 +180,9 @@ export default function YabinanDiPoderPage() {
             AWG 50
           </div>
           <p style={{ fontSize: 14.5, color: "#e3f5f0", marginBottom: 30 }}>One-time payment · Lifetime access</p>
-          <Link
-            href="/contact"
-            className="btn btn-white"
-            style={{ padding: "16px 34px", color: "var(--color-teal-dark)", fontSize: 15, boxShadow: "0 8px 18px #00000020" }}
-          >
-            Enroll Now
-          </Link>
+        </div>
+        <div style={{ maxWidth: 420, margin: "0 auto" }}>
+          <EnrollForm program="yabinan-di-poder" price="AWG 50" />
         </div>
       </section>
 
