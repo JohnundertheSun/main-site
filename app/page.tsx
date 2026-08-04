@@ -301,12 +301,15 @@ export default function Home() {
               Train Your Organization
             </div>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700, margin: "0 0 20px", lineHeight: 1.2 }}>
-              Bring the training in-house.
+              Will you wait until the next crisis?
             </h2>
+            <p style={{ fontSize: 16, lineHeight: 1.75, color: "var(--color-muted)", margin: "0 0 20px", maxWidth: 460 }}>
+              Losing leaders, losing members, losing quality, losing control — most organizations
+              only act once the cost is impossible to ignore.
+            </p>
             <p style={{ fontSize: 16, lineHeight: 1.75, color: "var(--color-muted)", margin: "0 0 26px", maxWidth: 460 }}>
-              Organizations can book an existing course or have a program adapted to their team —
-              from a masterclass of a few hours to a half or full training day, or a series of
-              sessions.
+              In-house training for NGOs, public bodies, trade unions and organizations that would
+              rather run to a plan than from one emergency to the next.
             </p>
             <Link href="/in-house-training" className="btn btn-primary" style={{ padding: "15px 30px", fontSize: 15 }}>
               Explore In-House Training

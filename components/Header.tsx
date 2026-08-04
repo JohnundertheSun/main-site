@@ -80,24 +80,10 @@ export default function Header() {
         })}
       </nav>
 
+      {/* NOTE: an EN/NL toggle belongs here, but only once Dutch translations
+          actually exist. A switch that does not switch reads as a broken site,
+          so it is deliberately omitted rather than faked. */}
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <div
-          className="lang-toggle"
-          style={{
-            display: "flex",
-            background: "#ece0cb",
-            borderRadius: 999,
-            padding: 3,
-            fontSize: 11,
-            fontWeight: 700,
-            flexShrink: 0,
-          }}
-        >
-          <span style={{ padding: "5px 12px", background: "var(--color-ink)", color: "white", borderRadius: 999 }}>
-            EN
-          </span>
-          <span style={{ padding: "5px 12px", color: "var(--color-faint)" }}>NL</span>
-        </div>
         <Link
           href="/contact"
           onClick={() => setOpen(false)}

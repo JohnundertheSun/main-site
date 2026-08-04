@@ -47,6 +47,7 @@ export default function ContactForm() {
         const data = new FormData(e.currentTarget);
         const reason = String(data.get("reason") ?? "");
         const message = String(data.get("message") ?? "");
+        const organization = String(data.get("organization") ?? "").trim();
         try {
           const res = await fetch("/api/enroll", {
             method: "POST",
@@ -55,7 +56,14 @@ export default function ContactForm() {
               program: "contact",
               name: data.get("name"),
               email: data.get("email"),
-              notes: `Reason: ${reason}\n\n${message}`,
+              notes: [
+                `Reason: ${reason}`,
+                organization ? `Organization: ${organization}` : null,
+                "",
+                message,
+              ]
+                .filter((line) => line !== null)
+                .join("\n"),
             }),
           });
           const json = await res.json();
@@ -105,6 +113,26 @@ export default function ContactForm() {
           type="email"
           name="email"
           placeholder="you@example.com"
+          style={{
+            width: "100%",
+            boxSizing: "border-box",
+            padding: "13px 16px",
+            borderRadius: 10,
+            border: "1px solid var(--color-cream-line)",
+            fontSize: 15,
+            fontFamily: "inherit",
+          }}
+        />
+      </div>
+      <div>
+        <label style={{ display: "block", fontSize: 13, fontWeight: 600, marginBottom: 8 }}>
+          Organization{" "}
+          <span style={{ color: "var(--color-faint)", fontWeight: 400 }}>(if applicable)</span>
+        </label>
+        <input
+          type="text"
+          name="organization"
+          placeholder="Your organization, and your role in it"
           style={{
             width: "100%",
             boxSizing: "border-box",
