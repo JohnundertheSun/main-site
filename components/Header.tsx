@@ -6,13 +6,12 @@ import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/speaking", label: "Speaking" },
-  { href: "/books", label: "Books" },
-  { href: "/arts", label: "Arts" },
-  { href: "/consulting", label: "Consulting" },
-  { href: "/board-advisory", label: "Board Advisory" },
-  { href: "/insights", label: "Insights" },
+  { href: "/courses", label: "Courses" },
+  { href: "/in-house-training", label: "In-House Training" },
+  { href: "/performances", label: "Performances" },
+  { href: "/books-and-ideas", label: "Books & Ideas" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {

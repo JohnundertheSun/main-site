@@ -19,9 +19,9 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Jayburtt Dijkhoff — Speaker, Author, Systems Thinker",
+  title: "Jayburtt Dijkhoff — Ideas That Move People and Systems",
   description:
-    "Jayburtt Dijkhoff helps people and organizations navigate healthcare and law across the ABC islands and the Netherlands, through speaking, books, and consulting.",
+    "Short courses, professional training, public speaking and artistic performance by Dr. Jayburtt Dijkhoff — across the Netherlands and the Dutch Caribbean.",
 };
 
 export default function RootLayout({

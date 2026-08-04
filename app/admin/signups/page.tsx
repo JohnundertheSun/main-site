@@ -10,6 +10,7 @@ type Signup = {
   email: string;
   phone: string | null;
   status: string;
+  notes: string | null;
 };
 
 async function loadSignups(): Promise<{ signups: Signup[]; error: string | null }> {
@@ -17,7 +18,7 @@ async function loadSignups(): Promise<{ signups: Signup[]; error: string | null 
     const supabase = getSupabaseServerClient();
     const { data, error } = await supabase
       .from("program_signups")
-      .select("id, created_at, program, name, email, phone, status")
+      .select("id, created_at, program, name, email, phone, status, notes")
       .order("created_at", { ascending: false });
 
     if (error) return { signups: [], error: error.message };
@@ -96,6 +97,7 @@ export default async function AdminSignupsPage() {
                 <th style={{ padding: "14px 18px" }}>Name</th>
                 <th style={{ padding: "14px 18px" }}>Email</th>
                 <th style={{ padding: "14px 18px" }}>Phone</th>
+                <th style={{ padding: "14px 18px" }}>Message</th>
                 <th style={{ padding: "14px 18px" }}>Status</th>
               </tr>
             </thead>
@@ -113,6 +115,9 @@ export default async function AdminSignupsPage() {
                     </a>
                   </td>
                   <td style={{ padding: "14px 18px", whiteSpace: "nowrap" }}>{s.phone ?? "—"}</td>
+                  <td style={{ padding: "14px 18px", maxWidth: 320, whiteSpace: "pre-wrap", color: "var(--color-muted)", fontSize: 13.5 }}>
+                    {s.notes ?? "—"}
+                  </td>
                   <td style={{ padding: "14px 18px" }}>
                     <span
                       style={{
@@ -132,7 +137,7 @@ export default async function AdminSignupsPage() {
               ))}
               {signups.length === 0 && !error && (
                 <tr>
-                  <td colSpan={6} style={{ padding: "32px 18px", textAlign: "center", color: "var(--color-faint)" }}>
+                  <td colSpan={7} style={{ padding: "32px 18px", textAlign: "center", color: "var(--color-faint)" }}>
                     No signups yet.
                   </td>
                 </tr>

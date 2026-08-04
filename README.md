@@ -1,8 +1,12 @@
-# Jayburtt Dijkhoff — Homepage
+# Jayburtt Dijkhoff — Ideas That Move People and Systems
 
-Personal site for Jayburtt Dijkhoff, PhD — speaker, author, and healthcare/law systems
-advisor for the ABC islands and the Netherlands. Built with Next.js (App Router) and TypeScript,
-implemented from the "Jayburtt Dijkhoff Homepage" Claude Design handoff.
+Site for Dr. Jayburtt Dijkhoff — educator, author, speaker and performer. Built with
+Next.js (App Router) and TypeScript.
+
+The business model the site is organised around: **teaching at scale, training in depth,
+art in public, and consulting only by invitation.** That maps to three primary pillars —
+Learn (`/courses`), Train Your Organization (`/in-house-training`), and Experience
+(`/performances`) — with advisory deliberately de-emphasised at `/advisory`.
 
 ## Development
 
@@ -15,19 +19,36 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Structure
 
-- `app/page.tsx` — homepage (hero, speaking, method, offerings, books, arts, consulting, insights, mission, newsletter)
-- `app/{speaking,books,arts,consulting,board-advisory,insights}/page.tsx` — landing pages linked from the nav
-- `app/about/page.tsx`, `app/contact/page.tsx` — bio and contact/booking form
-- `app/yabinan-di-poder/page.tsx` — online program landing page with a real enrollment form
-- `app/admin/signups/page.tsx` — password-protected overview of program signups
-- `components/` — shared Header, Footer, and section building blocks
-- `public/images/` — book cover and portrait photography from the design handoff
+- `app/page.tsx` — homepage, built around the three pillars
+- `app/courses/page.tsx` — course catalogue, grouped by language (NL / EN / PAP)
+- `app/courses/[slug]/page.tsx` — **reusable course page template**
+- `app/in-house-training/page.tsx` — formats, process and enquiry
+- `app/performances/page.tsx` — poetry, music, storytelling, cabaret + speaking formats
+- `app/books-and-ideas/page.tsx` — the book plus essays and reflections
+- `app/about/page.tsx`, `app/contact/page.tsx` — personal bio and enquiry form
+- `app/advisory/page.tsx` — selective advisory, by invitation (not in the main nav)
+- `app/admin/signups/page.tsx` — password-protected overview of all signups and enquiries
+- `lib/courses.ts` — **the course catalogue data**
+- `components/` — shared Header, Footer, forms and section building blocks
 
-## Program signups (Yabinan di Poder)
+### Adding a course
 
-The `/yabinan-di-poder` enrollment form and the `/admin/signups` overview need three
-environment variables, set in the hosting platform's dashboard (e.g. Vercel → Project →
-Settings → Environment Variables), not committed to the repo:
+Courses are data, not pages. Add an object to `COURSES` in `lib/courses.ts` and both the
+catalogue card and a full course page at `/courses/<slug>` appear automatically — no new
+files. Courses with `status: "coming-soon"` render as "In development" with a notify form
+instead of a buy path, so nothing looks purchasable before it is.
+
+Old URLs (`/speaking`, `/arts`, `/books`, `/insights`, `/consulting`, `/board-advisory`,
+`/yabinan-di-poder`) permanently redirect to their new homes — see `next.config.ts`.
+
+## Signups, enquiries and the admin overview
+
+Every form on the site — course enrolment, the course-agenda / founding-cohort list, and the
+contact form — writes to the same `program_signups` table and appears in `/admin/signups`.
+The `program` column distinguishes them (`contact`, `course-agenda`, or a course slug).
+
+This needs three environment variables, set in the hosting platform's dashboard (Vercel →
+Project → Settings → Environment Variables), not committed to the repo:
 
 | Variable | Purpose |
 | --- | --- |
@@ -53,7 +74,7 @@ Add all three variables above in Vercel → Project → Settings → Environment
 then redeploy so the new values are picked up.
 
 **How it works right now:** there is no real checkout yet. Visitors fill out the enrollment
-form on `/yabinan-di-poder`, which is saved to the `program_signups` table. Sign in at
+forms across the site, which are saved to the `program_signups` table. Sign in at
 `/admin/login` with `ADMIN_PASSWORD` to see everyone who signed up, then follow up manually
 with a Wix Payment Link to collect payment. This is intentionally a holding pattern — see
 the "real tool" note in project history for what comes next.

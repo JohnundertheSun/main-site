@@ -26,7 +26,8 @@ export default function Footer() {
             Jayburtt Dijkhoff
           </div>
           <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--color-faint)", maxWidth: 280 }}>
-            Speaker, author, and quality-systems expert for the ABC islands and the Netherlands.
+            Educator, author, speaker and performer. Teaching at scale, training in depth, art in
+            public.
           </p>
         </div>
 
@@ -35,26 +36,23 @@ export default function Footer() {
             Explore
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 11 }}>
-            <Link href="/speaking" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
-              Speaking
+            <Link href="/courses" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
+              Courses
             </Link>
-            <Link href="/books" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
-              Books
+            <Link href="/in-house-training" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
+              In-House Training
             </Link>
-            <Link href="/yabinan-di-poder" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
-              Yabinan di Poder
+            <Link href="/performances" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
+              Performances &amp; Speaking
             </Link>
-            <Link href="/arts" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
-              Arts
+            <Link href="/books-and-ideas" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
+              Books &amp; Ideas
             </Link>
-            <Link href="/consulting" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
-              Consulting
+            <Link href="/about" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
+              About
             </Link>
-            <Link href="/board-advisory" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
-              Board Advisory
-            </Link>
-            <Link href="/insights" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
-              Insights
+            <Link href="/advisory" className="text-link" style={{ fontSize: 14.5, color: "var(--color-muted)" }}>
+              Advisory (by invitation)
             </Link>
           </div>
         </div>

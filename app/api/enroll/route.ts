@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Invalid request body." }, { status: 400 });
   }
 
-  const { program, name, email, phone } = (body ?? {}) as Record<string, unknown>;
+  const { program, name, email, phone, notes } = (body ?? {}) as Record<string, unknown>;
 
   if (typeof program !== "string" || !program.trim()) {
     return NextResponse.json({ ok: false, error: "Missing program." }, { status: 400 });
@@ -25,6 +25,9 @@ export async function POST(request: Request) {
   if (phone !== undefined && phone !== null && (typeof phone !== "string" || phone.length > 60)) {
     return NextResponse.json({ ok: false, error: "Invalid phone number." }, { status: 400 });
   }
+  if (notes !== undefined && notes !== null && (typeof notes !== "string" || notes.length > 5000)) {
+    return NextResponse.json({ ok: false, error: "Message is too long." }, { status: 400 });
+  }
 
   try {
     const supabase = getSupabaseServerClient();
@@ -33,6 +36,7 @@ export async function POST(request: Request) {
       name: name.trim(),
       email: email.trim().toLowerCase(),
       phone: typeof phone === "string" && phone.trim() ? phone.trim() : null,
+      notes: typeof notes === "string" && notes.trim() ? notes.trim() : null,
     });
 
     if (error) {

@@ -3,16 +3,19 @@
 import { useState } from "react";
 
 const REASONS = [
-  "A speaking engagement",
-  "Consulting for my organization",
-  "A team subscription",
+  "A course or masterclass",
+  "In-house training for my organization",
+  "A performance or speaking engagement",
   "A book order",
   "Media or press",
+  "Advisory or coaching",
   "Something else",
 ];
 
 export default function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
+  const [error, setError] = useState("");
+  const submitted = status === "done";
 
   if (submitted) {
     return (
@@ -37,9 +40,35 @@ export default function ContactForm() {
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        setSubmitted(true);
+        setStatus("submitting");
+        setError("");
+        const data = new FormData(e.currentTarget);
+        const reason = String(data.get("reason") ?? "");
+        const message = String(data.get("message") ?? "");
+        try {
+          const res = await fetch("/api/enroll", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              program: "contact",
+              name: data.get("name"),
+              email: data.get("email"),
+              notes: `Reason: ${reason}\n\n${message}`,
+            }),
+          });
+          const json = await res.json();
+          if (!res.ok || !json.ok) {
+            setError(json.error || "Something went wrong. Please try again.");
+            setStatus("error");
+            return;
+          }
+          setStatus("done");
+        } catch {
+          setError("Something went wrong. Please try again.");
+          setStatus("error");
+        }
       }}
       style={{
         background: "var(--color-offwhite)",
@@ -129,12 +158,16 @@ export default function ContactForm() {
           }}
         />
       </div>
+      {status === "error" && (
+        <p style={{ fontSize: 13.5, color: "var(--color-accent-dark)", margin: 0 }}>{error}</p>
+      )}
       <button
         type="submit"
+        disabled={status === "submitting"}
         className="btn btn-primary"
-        style={{ padding: "15px 30px", fontSize: 15, alignSelf: "flex-start" }}
+        style={{ padding: "15px 30px", fontSize: 15, alignSelf: "flex-start", opacity: status === "submitting" ? 0.7 : 1 }}
       >
-        Send Message
+        {status === "submitting" ? "Sending…" : "Send Message"}
       </button>
     </form>
   );

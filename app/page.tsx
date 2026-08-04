@@ -2,103 +2,59 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import NewsletterForm from "@/components/NewsletterForm";
+import SpotlightCard from "@/components/SpotlightCard";
+import CourseAgendaForm from "@/components/CourseAgendaForm";
+import { COURSES } from "@/lib/courses";
 
-const METHOD_STEPS = [
+const PILLARS = [
   {
-    n: "01",
-    color: "var(--color-accent)",
-    title: "Research",
-    body: "Rigorous, doctoral-level investigation into how systems actually work, and where they fail.",
+    eyebrow: "Learn",
+    title: "Short courses and live masterclasses.",
+    body: "Short online courses and live masterclasses for professionals who want practical knowledge, insight and confidence.",
+    href: "/courses",
+    cta: "Explore Courses",
+    background: "var(--color-navy)",
+    text: "#c3d2e4",
+    ctaColor: "var(--color-navy)",
   },
   {
-    n: "02",
-    color: "var(--color-teal)",
-    title: "Educate",
-    body: "Turning findings into talks, books, and programs that make complex systems usable by everyone.",
+    eyebrow: "Train Your Organization",
+    title: "In-house training, built for your team.",
+    body: "In-house courses, workshops and customized learning programs for teams and professional organizations.",
+    href: "/in-house-training",
+    cta: "Book an In-House Training",
+    background: "var(--color-teal)",
+    text: "#dbf0ea",
+    ctaColor: "var(--color-teal-dark)",
   },
   {
-    n: "03",
-    color: "var(--color-navy)",
-    title: "Listen",
-    body: "Every audience and client sharpens the method. Feedback is the fuel, not an afterthought.",
-  },
-  {
-    n: "04",
-    color: "var(--color-accent)",
-    title: "Improve",
-    body: "Systems, and the people inside them, get simpler, safer, and stronger with every cycle.",
+    eyebrow: "Experience",
+    title: "Ideas brought to life, in public.",
+    body: "Artistic performances, lectures, poetry, music and storytelling that bring ideas and human experience to life.",
+    href: "/performances",
+    cta: "Performances & Speaking",
+    background: "var(--color-ink)",
+    text: "#c9c4b6",
+    ctaColor: "var(--color-ink)",
   },
 ];
 
-const OFFERINGS = [
-  {
-    title: "Keynotes & Workshops",
-    body: "Live talks, panels, and hands-on master classes for teams and conferences.",
-  },
-  {
-    title: "Online Programs",
-    body: "Fully online, self-paced courses that bring the same rigor to any schedule.",
-  },
-  {
-    title: "Team Subscriptions",
-    body: "Ongoing access for organizations that want their teams current, year-round.",
-  },
-  {
-    title: "One-on-One Consulting",
-    body: "Direct, high-level advisory for institutions and Dutch healthcare providers.",
-  },
-  {
-    title: "Books & Writing",
-    body: "Published work on patient rights, with more on the way.",
-  },
-  {
-    title: "Media & TV",
-    body: "Featured commentary and his own television program, bringing these ideas to a wider audience.",
-  },
-];
-
-const IMPACT_NUMBERS = [
-  { value: "10+", color: "var(--color-accent)", label: "Years in Healthcare Systems" },
-  { value: "3", color: "var(--color-teal)", label: "ABC Islands & the Netherlands" },
-  { value: "1", color: "var(--color-navy)", label: "Published Book on Patient Rights" },
-  { value: "PhD", color: "var(--color-accent)", label: "Health Sciences" },
-];
-
-const INSIGHTS = [
-  {
-    tag: "Health",
-    tagBg: "#f2e0d2",
-    tagColor: "#a1462a",
-    title: "Low Risk Is Never Zero Risk: What Aruba Must Know About Hantavirus",
-  },
-  {
-    tag: "Law",
-    tagBg: "#dbeae6",
-    tagColor: "#1a6b5c",
-    title: "Governance Across the Kingdom: Where Dutch and Caribbean Rules Meet",
-  },
-  {
-    tag: "Reflection",
-    tagBg: "#dde5f0",
-    tagColor: "#17325a",
-    title: "The Elephant Was Never Pink. It Was Always White.",
-  },
+const CREDENTIALS = [
+  "PhD, Health Sciences",
+  "Published Author",
+  "Featured on TV",
+  "Supported by SIKI Foundation",
 ];
 
 export default function Home() {
+  const featured = COURSES.slice(0, 3);
+
   return (
-    <div
-      style={{
-        fontFamily: "var(--font-body)",
-        color: "var(--color-ink)",
-        background: "var(--color-bg)",
-      }}
-    >
+    <div style={{ fontFamily: "var(--font-body)", color: "var(--color-ink)", background: "var(--color-bg)" }}>
       <Header />
 
       {/* HERO */}
-      <section style={{ padding: "110px 24px 100px", position: "relative", textAlign: "center" }}>
+      <section style={{ padding: "110px 24px 90px", position: "relative", textAlign: "center" }}>
         <div
           style={{
             position: "absolute",
@@ -126,77 +82,47 @@ export default function Home() {
         />
         <div
           style={{
-            maxWidth: 820,
+            maxWidth: 860,
             margin: "0 auto",
             animation: "fadeUp .7s ease-out both",
             position: "relative",
             zIndex: 1,
           }}
         >
-          <div
-            style={{
-              fontSize: 13.5,
-              fontWeight: 600,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: "var(--color-accent)",
-              marginBottom: 22,
-            }}
-          >
-            Speaker · Author · High-Level Consultant
-          </div>
           <h1
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(38px, 6vw, 66px)",
-              lineHeight: 1.12,
+              lineHeight: 1.1,
               fontWeight: 700,
               margin: "0 0 26px",
               letterSpacing: "-0.02em",
             }}
           >
-            No organization should manage risk alone.
+            Ideas that move people and systems.
           </h1>
           <p
             style={{
-              fontSize: 18,
+              fontSize: 18.5,
               lineHeight: 1.6,
               color: "var(--color-muted)",
-              maxWidth: 560,
-              margin: "0 auto 38px",
+              maxWidth: 620,
+              margin: "0 auto 40px",
             }}
           >
-            I&apos;m Jayburtt Dijkhoff. After 13 years inside government and healthcare
-            governance, I now guide and coach advisory and directive boards to take control of
-            risk, before it takes control of them.
+            Short courses, professional training, public speaking and artistic performance by{" "}
+            Dr. Jayburtt Dijkhoff.
           </p>
-          <div
-            style={{
-              display: "flex",
-              gap: 14,
-              justifyContent: "center",
-              marginBottom: 32,
-              flexWrap: "wrap",
-            }}
-          >
-            <Link href="/board-advisory" className="btn btn-primary" style={{ padding: "16px 32px", fontSize: 15 }}>
-              Book a Board Session
+          <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/courses" className="btn btn-primary" style={{ padding: "16px 32px", fontSize: 15 }}>
+              Explore Courses
             </Link>
-            <Link href="/consulting" className="btn btn-secondary" style={{ padding: "16px 32px", fontSize: 15 }}>
-              Explore Consulting
+            <Link href="/in-house-training" className="btn btn-secondary" style={{ padding: "16px 32px", fontSize: 15 }}>
+              Book an In-House Training
             </Link>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 18, flexWrap: "wrap" }}>
-            <span style={{ fontSize: 12.5, color: "var(--color-faint)", letterSpacing: "0.04em" }}>FOLLOW</span>
-            <a href="#" className="text-link" style={{ fontSize: 13.5 }}>
-              LinkedIn
-            </a>
-            <a href="#" className="text-link" style={{ fontSize: 13.5 }}>
-              Instagram
-            </a>
-            <a href="#" className="text-link" style={{ fontSize: 13.5 }}>
-              Facebook
-            </a>
+            <Link href="/performances" className="btn btn-secondary" style={{ padding: "16px 32px", fontSize: 15 }}>
+              Performances &amp; Speaking
+            </Link>
           </div>
         </div>
       </section>
@@ -205,327 +131,268 @@ export default function Home() {
       <section style={{ background: "var(--color-navy)", padding: "30px 24px" }}>
         <div
           className="container"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 20,
-          }}
+          style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 20 }}
         >
-          {["Featured on TV", "PhD, Health Sciences", "Published Author", "Supported by SIKI Foundation"].map(
-            (item, i) => (
-              <div key={item} style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                {i > 0 && <div style={{ width: 1, height: 16, background: "#2c4a75" }} />}
-                <div
-                  style={{
-                    fontSize: 12.5,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "#9fb2ca",
-                  }}
-                >
-                  {item}
-                </div>
+          {CREDENTIALS.map((item, i) => (
+            <div key={item} style={{ display: "flex", alignItems: "center", gap: 20 }}>
+              {i > 0 && <div style={{ width: 1, height: 16, background: "#2c4a75" }} />}
+              <div style={{ fontSize: 12.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "#9fb2ca" }}>
+                {item}
               </div>
-            )
-          )}
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* SPEAKING */}
-      <section
-        style={{
-          padding: "110px 24px",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 64,
-          alignItems: "center",
-          maxWidth: 1284,
-          marginInline: "auto",
-        }}
-        className="grid-2 reveal"
-      >
-        <div className="img-zoom" style={{ borderRadius: 24 }}>
-          <Image
-            src="/images/portrait-speaking.png"
-            alt="Jayburtt Dijkhoff"
-            width={640}
-            height={688}
-            style={{
-              width: "100%",
-              height: 440,
-              objectFit: "contain",
-              objectPosition: "center",
-              background: "var(--color-cream)",
-              borderRadius: 24,
-              boxShadow: "0 24px 48px #00000022",
-            }}
-          />
-        </div>
-        <div>
-          <div className="eyebrow" style={{ marginBottom: 16 }}>
-            On Stage
+      {/* THREE PILLARS */}
+      <section className="reveal" style={{ padding: "100px 24px" }}>
+        <div style={{ textAlign: "center", marginBottom: 56 }}>
+          <div className="eyebrow" style={{ marginBottom: 14 }}>
+            How I Work
           </div>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: 38,
-              fontWeight: 700,
-              margin: "0 0 20px",
-              lineHeight: 1.15,
-            }}
-          >
-            Talks that make complexity feel human.
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700 }}>
+            Teaching at scale. Training in depth. Art in public.
           </h2>
-          <p style={{ fontSize: 16, lineHeight: 1.75, color: "var(--color-muted)", margin: "0 0 28px", maxWidth: 460 }}>
-            From keynotes on healthcare governance to intimate reflections on dignity and rights,
-            Jayburtt brings doctoral rigor and lived experience to every stage, across the ABC
-            islands and the Netherlands.
-          </p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 30 }}>
-            {[
-              { n: "01", bg: "var(--color-accent)", label: "The Human Side of Healthcare Systems" },
-              { n: "02", bg: "var(--color-teal)", label: "Navigating Recognition Across the Kingdom" },
-              { n: "03", bg: "var(--color-navy)", label: "Patient Rights, Reimagined" },
-            ].map((item) => (
+        </div>
+        <div
+          className="container grid-3 reveal reveal-stagger"
+          style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 28 }}
+        >
+          {PILLARS.map((p) => (
+            <SpotlightCard
+              key={p.eyebrow}
+              className="talk-card"
+              style={{
+                background: p.background,
+                borderRadius: 28,
+                padding: 40,
+                color: "white",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
               <div
-                key={item.n}
                 style={{
-                  display: "flex",
-                  gap: 16,
-                  alignItems: "center",
-                  background: "var(--color-offwhite)",
-                  borderRadius: 16,
-                  padding: "16px 20px",
-                  boxShadow: "0 6px 16px #00000010",
+                  fontSize: 12.5,
+                  fontWeight: 600,
+                  letterSpacing: "0.09em",
+                  textTransform: "uppercase",
+                  color: "#ffffffb0",
+                  marginBottom: 14,
                 }}
               >
-                <span
-                  style={{
-                    width: 34,
-                    height: 34,
-                    borderRadius: 10,
-                    background: item.bg,
-                    color: "white",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontFamily: "var(--font-display)",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    flexShrink: 0,
-                  }}
-                >
-                  {item.n}
-                </span>
-                <span style={{ fontSize: 15, fontWeight: 600 }}>{item.label}</span>
+                {p.eyebrow}
               </div>
-            ))}
-          </div>
-          <Link href="/speaking" className="text-link" style={{ fontSize: 15 }}>
-            View Speaking Topics →
-          </Link>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: 23, fontWeight: 700, margin: "0 0 14px", lineHeight: 1.25 }}>
+                {p.title}
+              </h3>
+              <p style={{ fontSize: 15, lineHeight: 1.7, color: p.text, margin: "0 0 28px", flexGrow: 1 }}>
+                {p.body}
+              </p>
+              <Link
+                href={p.href}
+                className="btn btn-white"
+                style={{ padding: "13px 24px", color: p.ctaColor, fontSize: 14.5, alignSelf: "flex-start" }}
+              >
+                {p.cta} →
+              </Link>
+            </SpotlightCard>
+          ))}
         </div>
       </section>
 
-      {/* METHOD */}
-      <section style={{ background: "var(--color-offwhite)", padding: "100px 24px" }}>
-        <div className="container">
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
+      {/* COURSES PREVIEW */}
+      <section className="reveal" style={{ background: "var(--color-offwhite)", padding: "100px 24px" }}>
+        <div
+          className="container"
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 44, flexWrap: "wrap", gap: 16 }}
+        >
+          <div>
             <div className="eyebrow" style={{ marginBottom: 14 }}>
-              The Method
+              Learn
             </div>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700 }}>
-              Research. Educate. Improve.
+              Practical knowledge you can use.
             </h2>
           </div>
-          <div
-            className="grid-4 reveal reveal-stagger"
-            style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24 }}
-          >
-            {METHOD_STEPS.map((step) => (
-              <div
-                key={step.n}
-                className="method-card"
-                style={{ background: "var(--color-cream)", borderRadius: 20, padding: 28 }}
-              >
-                <div style={{ fontFamily: "var(--font-display)", fontSize: 28, color: step.color, marginBottom: 12 }}>
-                  {step.n}
-                </div>
-                <h3 style={{ fontSize: 16.5, fontWeight: 600, margin: "0 0 10px" }}>{step.title}</h3>
-                <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "var(--color-muted)" }}>{step.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHO THIS IS FOR */}
-      <section style={{ padding: "100px 24px" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <div className="eyebrow" style={{ marginBottom: 14 }}>
-            Find Your Path
-          </div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700 }}>
-            Built for individuals and institutions alike.
-          </h2>
-        </div>
-        <div className="container grid-2 reveal reveal-stagger" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
-          <div style={{ background: "var(--color-navy)", borderRadius: 28, padding: 44, color: "white" }}>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, margin: "0 0 16px" }}>
-              For Individuals
-            </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: "#c3d2e4", margin: "0 0 26px" }}>
-              Understand your rights, learn from the books, and follow the work through talks and
-              writing that make complex systems make sense.
-            </p>
-            <Link
-              href="/books"
-              className="btn btn-white"
-              style={{ padding: "13px 26px", color: "var(--color-navy)", fontSize: 14.5 }}
-            >
-              Start With the Books →
-            </Link>
-          </div>
-          <div style={{ background: "var(--color-teal)", borderRadius: 28, padding: 44, color: "white" }}>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, margin: "0 0 16px" }}>
-              For Organizations
-            </h3>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: "#dbf0ea", margin: "0 0 26px" }}>
-              Bring Jayburtt in for keynotes, master classes, one-on-one consulting, or an ongoing
-              subscription to keep your teams current.
-            </p>
-            <Link
-              href="/consulting"
-              className="btn btn-white"
-              style={{ padding: "13px 26px", color: "var(--color-teal-dark)", fontSize: 14.5 }}
-            >
-              Explore Consulting →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* OFFERINGS */}
-      <section style={{ background: "var(--color-cream)", padding: "100px 24px" }}>
-        <div style={{ textAlign: "center", marginBottom: 56 }}>
-          <div className="eyebrow" style={{ marginBottom: 14 }}>
-            Ways to Work Together
-          </div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700 }}>
-            From a single talk to an ongoing partnership.
-          </h2>
+          <Link href="/courses" className="text-link" style={{ fontSize: 15 }}>
+            See All Courses →
+          </Link>
         </div>
         <div
           className="container grid-3 reveal reveal-stagger"
           style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
         >
-          {OFFERINGS.map((item) => (
-            <div
-              key={item.title}
-              className="offering-card"
+          {featured.map((course) => (
+            <Link
+              key={course.slug}
+              href={`/courses/${course.slug}`}
+              className="card-hover"
               style={{
-                background: "var(--color-offwhite)",
+                background: "var(--color-cream)",
                 borderRadius: 20,
-                padding: 32,
-                boxShadow: "0 12px 28px #00000010",
+                padding: 30,
+                display: "block",
               }}
             >
-              <h3 style={{ fontSize: 17, fontWeight: 600, margin: "0 0 10px" }}>{item.title}</h3>
-              <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--color-muted)" }}>{item.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* IMPACT NUMBERS */}
-      <section style={{ background: "var(--color-offwhite)", padding: "70px 24px" }}>
-        <div
-          className="container grid-4"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4,1fr)",
-            gap: 26,
-            textAlign: "center",
-          }}
-        >
-          {IMPACT_NUMBERS.map((item) => (
-            <div key={item.label}>
-              <div
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 42,
-                  fontWeight: 700,
-                  color: item.color,
-                  marginBottom: 8,
-                }}
-              >
-                {item.value}
+              <div style={{ display: "flex", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
+                <span
+                  style={{
+                    padding: "4px 11px",
+                    background: "#dde5f0",
+                    borderRadius: 12,
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: "#17325a",
+                  }}
+                >
+                  {course.language}
+                </span>
+                {course.status === "coming-soon" && (
+                  <span
+                    style={{
+                      padding: "4px 11px",
+                      background: "#ece2d0",
+                      borderRadius: 12,
+                      fontSize: 11,
+                      fontWeight: 600,
+                      color: "#5a4a30",
+                    }}
+                  >
+                    In development
+                  </span>
+                )}
               </div>
-              <div style={{ fontSize: 13.5, color: "var(--color-muted)" }}>{item.label}</div>
-            </div>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, margin: "0 0 8px" }}>
+                {course.title}
+              </h3>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--color-muted)", margin: 0 }}>
+                {course.summary.slice(0, 120)}…
+              </p>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* PULL QUOTE */}
-      <section
-        className="reveal"
-        style={{ background: "var(--color-navy)", padding: "100px 24px", textAlign: "center" }}
-      >
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <div style={{ fontFamily: "var(--font-display)", fontSize: 64, lineHeight: 0.6, color: "#3f5c86", marginBottom: 10 }}>
-            &ldquo;
+      {/* IN-HOUSE TRAINING */}
+      <section className="reveal" style={{ padding: "100px 24px" }}>
+        <div
+          className="container grid-2"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
+        >
+          <div className="img-zoom" style={{ borderRadius: 24 }}>
+            <Image
+              src="/images/portrait-speaking.png"
+              alt="Jayburtt Dijkhoff teaching"
+              width={640}
+              height={688}
+              style={{
+                width: "100%",
+                height: 420,
+                objectFit: "contain",
+                background: "var(--color-cream)",
+                borderRadius: 24,
+                boxShadow: "0 24px 48px #00000022",
+              }}
+            />
           </div>
-          <p
-            style={{
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
-              fontSize: 30,
-              lineHeight: 1.5,
-              color: "white",
-              margin: "0 0 22px",
-            }}
-          >
-            When people understand the systems around them, they can make better decisions,
-            resolve their issues, and reach their goals.
-          </p>
-          <div style={{ width: 40, height: 2, background: "var(--color-accent)", margin: "0 auto 14px" }} />
-          <div style={{ fontSize: 14, color: "#9fb2ca" }}>Jayburtt Dijkhoff, PhD</div>
+          <div>
+            <div className="eyebrow" style={{ marginBottom: 16 }}>
+              Train Your Organization
+            </div>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700, margin: "0 0 20px", lineHeight: 1.2 }}>
+              Bring the training in-house.
+            </h2>
+            <p style={{ fontSize: 16, lineHeight: 1.75, color: "var(--color-muted)", margin: "0 0 26px", maxWidth: 460 }}>
+              Organizations can book an existing course or have a program adapted to their team —
+              from a masterclass of a few hours to a half or full training day, or a series of
+              sessions.
+            </p>
+            <Link href="/in-house-training" className="btn btn-primary" style={{ padding: "15px 30px", fontSize: 15 }}>
+              Explore In-House Training
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* BOOKS */}
-      <section style={{ padding: "110px 24px" }}>
+      {/* PERFORMANCES */}
+      <section className="reveal" style={{ background: "var(--color-teal)", padding: "100px 24px" }}>
         <div
-          className="container"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
-            marginBottom: 48,
-            flexWrap: "wrap",
-            gap: 16,
-          }}
+          className="container grid-2"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
         >
           <div>
-            <div className="eyebrow" style={{ marginBottom: 14 }}>
-              Books &amp; Writing
+            <div
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#d9f3ec",
+                marginBottom: 16,
+              }}
+            >
+              Experience
             </div>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700 }}>
-              Written to be understood.
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700, margin: "0 0 20px", color: "white", lineHeight: 1.2 }}>
+              Poetry, music, storytelling and lecture-performance.
             </h2>
+            <p style={{ fontSize: 16, lineHeight: 1.75, color: "#e3f5f0", margin: "0 0 28px", maxWidth: 460 }}>
+              The artistic work is not a footnote to the teaching — it carries the same questions
+              in a different voice, and belongs on a stage in front of people.
+            </p>
+            <Link
+              href="/performances"
+              className="btn btn-white"
+              style={{ padding: "14px 30px", color: "var(--color-teal-dark)", fontSize: 15, boxShadow: "0 8px 18px #00000020" }}
+            >
+              Performances &amp; Speaking →
+            </Link>
           </div>
-          <Link href="/books" className="text-link" style={{ fontSize: 15 }}>
-            See All Books →
-          </Link>
+          <div className="img-zoom" style={{ borderRadius: 24 }}>
+            <Image
+              src="/images/portrait-arts.png"
+              alt="Jayburtt Dijkhoff"
+              width={1024}
+              height={1024}
+              style={{
+                width: "100%",
+                height: 400,
+                objectFit: "cover",
+                borderRadius: 24,
+                boxShadow: "0 24px 48px #00000030",
+              }}
+            />
+          </div>
         </div>
+      </section>
+
+      {/* COURSE AGENDA / FOUNDING COHORTS */}
+      <section className="reveal" style={{ background: "var(--color-ink)", padding: "90px 24px" }}>
+        <div style={{ maxWidth: 620, margin: "0 auto", textAlign: "center" }}>
+          <div className="eyebrow" style={{ marginBottom: 16 }}>
+            Course Agenda
+          </div>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, color: "white", margin: "0 0 16px" }}>
+            Be first into the next cohort.
+          </h2>
+          <p style={{ fontSize: 15.5, lineHeight: 1.7, color: "#a8a49a", margin: "0 0 32px" }}>
+            New courses open in small founding cohorts. Join the agenda list and you&apos;ll hear
+            about new dates, new programs, and founding-cohort places before anyone else.
+          </p>
+        </div>
+        <div style={{ maxWidth: 420, margin: "0 auto" }}>
+          <CourseAgendaForm />
+        </div>
+      </section>
+
+      {/* BOOKS & IDEAS */}
+      <section className="reveal" style={{ padding: "100px 24px" }}>
         <div
-          className="container grid-2 reveal"
+          className="container grid-2"
           style={{
             display: "grid",
-            gridTemplateColumns: "0.5fr 1fr",
+            gridTemplateColumns: "0.45fr 1fr",
             gap: 56,
             alignItems: "center",
             background: "var(--color-offwhite)",
@@ -540,234 +407,55 @@ export default function Home() {
               alt="Derechonan di Pashent book cover"
               width={640}
               height={1024}
-              style={{ width: "100%", height: 420, objectFit: "cover", borderRadius: 14, boxShadow: "0 20px 40px #00000022" }}
+              style={{ width: "100%", height: 380, objectFit: "cover", borderRadius: 14, boxShadow: "0 20px 40px #00000022" }}
             />
           </div>
           <div>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: 27, fontWeight: 600, margin: "0 0 12px" }}>
-              Derechonan di Pashent
-            </h3>
+            <div className="eyebrow" style={{ marginBottom: 14 }}>
+              Books &amp; Ideas
+            </div>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 30, fontWeight: 700, margin: "0 0 16px" }}>
+              Written to be understood.
+            </h2>
             <p style={{ fontSize: 15.5, lineHeight: 1.75, color: "var(--color-muted)", margin: "0 0 26px", maxWidth: 440 }}>
-              A clear-language guide to patient rights in Aruba, written to help every reader
-              understand and command their place in the healthcare system.
+              Books, essays and reflections on rights, systems and what it means to be human
+              inside them — written in clear language, for everyone.
             </p>
-            <div style={{ display: "flex", alignItems: "center", gap: 22, flexWrap: "wrap" }}>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 600 }}>$20.00</div>
-              <Link
-                href="/books"
-                className="btn btn-primary"
-                style={{ padding: "14px 30px", fontSize: 15, boxShadow: "0 8px 18px #c65a3540" }}
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ARTS TEASER */}
-      <section style={{ background: "var(--color-teal)", padding: "100px 24px" }}>
-        <div
-          className="container grid-2 reveal"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
-        >
-          <div style={{ position: "relative" }}>
-            <div
-              style={{
-                position: "absolute",
-                inset: "-16px 16px 16px -16px",
-                border: "2px solid #ffffff40",
-                borderRadius: 24,
-                zIndex: 0,
-              }}
-            />
-            <div className="img-zoom" style={{ position: "relative", zIndex: 1, borderRadius: 24 }}>
-              <Image
-                src="/images/portrait-arts.png"
-                alt="Jayburtt Dijkhoff"
-                width={1024}
-                height={1024}
-                style={{
-                  width: "100%",
-                  height: 380,
-                  objectFit: "contain",
-                  objectPosition: "center",
-                  background: "var(--color-teal-dark)",
-                  borderRadius: 24,
-                  boxShadow: "0 24px 48px #00000030",
-                }}
-              />
-            </div>
-          </div>
-          <div>
-            <div style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "#d9f3ec", marginBottom: 16 }}>
-              Beyond the Systems
-            </div>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700, margin: "0 0 20px", color: "white", lineHeight: 1.2 }}>
-              Poetry, music, and other reflections.
-            </h2>
-            <p style={{ fontSize: 16, lineHeight: 1.75, color: "#e3f5f0", margin: "0 0 28px", maxWidth: 440 }}>
-              Jayburtt&apos;s creative work, poetry now, music next, explores the same questions as
-              his professional life, in a different voice.
-            </p>
-            <Link
-              href="/arts"
-              className="btn btn-white"
-              style={{ padding: "14px 30px", color: "var(--color-teal-dark)", fontSize: 15, boxShadow: "0 8px 18px #00000020" }}
-            >
-              Explore the Arts →
+            <Link href="/books-and-ideas" className="text-link" style={{ fontSize: 15 }}>
+              Read Books &amp; Ideas →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* CONSULTING */}
-      <section style={{ background: "var(--color-cream)", padding: "100px 24px" }}>
-        <div
-          className="container grid-2 reveal"
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "center" }}
-        >
-          <div>
-            <div className="eyebrow" style={{ marginBottom: 16 }}>
-              For Organizations
-            </div>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700, margin: "0 0 20px", lineHeight: 1.2 }}>
-              High-level consulting, one-on-one.
-            </h2>
-            <p style={{ fontSize: 16, lineHeight: 1.75, color: "var(--color-muted)", margin: "0 0 20px", maxWidth: 460 }}>
-              Direct advisory for healthcare institutions and Dutch providers on governance,
-              recognition pathways, and quality systems, plus ongoing team subscriptions. No
-              intermediaries, just Jayburtt.
-            </p>
-            <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "var(--color-faint)", margin: "0 0 28px", maxWidth: 460 }}>
-              Jayburtt is not a lawyer. Advisory letters and guidance support your case but are not
-              legal representation.
-            </p>
-            <Link href="/consulting" className="btn btn-dark" style={{ padding: "14px 30px", fontSize: 15 }}>
-              Explore Consulting
-            </Link>
-          </div>
-          <div style={{ background: "var(--color-offwhite)", borderRadius: 24, padding: 40, boxShadow: "0 16px 36px #00000012" }}>
-            <div style={{ fontSize: 13, color: "var(--color-faint)", marginBottom: 8 }}>Most Requested</div>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 600, margin: "0 0 14px" }}>
-              Recognition Support: Beroepswaardering
-            </h3>
-            <p style={{ fontSize: 14.5, lineHeight: 1.65, color: "var(--color-muted)", margin: "0 0 20px" }}>
-              AruBIG &amp; KIG pathway advisory for healthcare professionals.
-            </p>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                borderTop: "1px solid var(--color-cream-line)",
-                paddingTop: 20,
-                flexWrap: "wrap",
-                gap: 12,
-              }}
-            >
-              <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600 }}>US$ 675</div>
-              <Link href="/contact" className="text-link" style={{ fontSize: 14 }}>
-                Book Now →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INSIGHTS */}
-      <section style={{ padding: "100px 24px" }}>
+      {/* ADVISORY — deliberately low on the page, by invitation */}
+      <section className="reveal" style={{ background: "var(--color-cream)", padding: "70px 24px" }}>
         <div
           className="container"
           style={{
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-end",
-            marginBottom: 44,
+            alignItems: "center",
+            gap: 28,
             flexWrap: "wrap",
-            gap: 16,
           }}
         >
-          <div>
-            <div className="eyebrow" style={{ marginBottom: 14 }}>
-              The Blog
+          <div style={{ maxWidth: 640 }}>
+            <div style={{ fontSize: 12.5, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--color-faint)", marginBottom: 10 }}>
+              By Invitation
             </div>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 700 }}>
-              Health. Law. Reflection.
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 600, margin: "0 0 10px" }}>
+              Selective advisory and coaching
             </h2>
+            <p style={{ fontSize: 14.5, lineHeight: 1.7, color: "var(--color-muted)", margin: 0 }}>
+              A limited number of advisory and coaching engagements are taken on each year, at a
+              premium rate and within a clearly defined scope.
+            </p>
           </div>
-          <Link href="/insights" className="text-link" style={{ fontSize: 15 }}>
-            Read All Posts →
+          <Link href="/advisory" className="text-link" style={{ fontSize: 14.5, whiteSpace: "nowrap" }}>
+            Enquire →
           </Link>
         </div>
-        <div
-          className="container grid-3 reveal reveal-stagger"
-          style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 24 }}
-        >
-          {INSIGHTS.map((post) => (
-            <article
-              key={post.title}
-              className="card-hover"
-              style={{
-                background: "var(--color-offwhite)",
-                borderRadius: 20,
-                overflow: "hidden",
-                boxShadow: "0 12px 28px #00000012",
-              }}
-            >
-              <div className="article-thumb" style={{ width: "100%", height: 180 }}>
-                Article image
-              </div>
-              <div style={{ padding: 24 }}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    padding: "4px 12px",
-                    background: post.tagBg,
-                    borderRadius: 12,
-                    fontSize: 11,
-                    fontWeight: 600,
-                    color: post.tagColor,
-                    marginBottom: 12,
-                  }}
-                >
-                  {post.tag}
-                </span>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 600, lineHeight: 1.4 }}>
-                  {post.title}
-                </h3>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* MISSION */}
-      <section className="reveal" style={{ background: "var(--color-ink)", padding: "100px 24px" }}>
-        <div style={{ maxWidth: 820, margin: "0 auto", textAlign: "center" }}>
-          <div className="eyebrow" style={{ marginBottom: 16 }}>
-            The Mission
-          </div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, margin: "0 0 20px", color: "white", lineHeight: 1.3 }}>
-            Stronger healthcare systems for the ABC islands.
-          </h2>
-          <p style={{ fontSize: 16, lineHeight: 1.75, color: "#c9c4b6" }}>
-            Part of Jayburtt&apos;s work is personal: pushing for accountability, oversight, and
-            better outcomes in healthcare across Aruba, Bonaire, and Curaçao, so patients are
-            protected and practitioners are supported.
-          </p>
-        </div>
-      </section>
-
-      {/* FOLLOW / NEWSLETTER */}
-      <section style={{ background: "var(--color-ink)", padding: "90px 24px", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 700, color: "white", margin: "0 0 14px" }}>
-          Follow the Journey
-        </h2>
-        <p style={{ fontSize: 15.5, color: "#a8a49a", margin: "0 0 34px" }}>
-          New talks, books, and reflections, straight to your inbox.
-        </p>
-        <NewsletterForm />
       </section>
 
       <Footer />
