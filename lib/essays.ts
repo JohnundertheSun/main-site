@@ -7,6 +7,13 @@ import path from "node:path";
 // filled in progressively without anything 404ing.
 
 export type Essay = {
+  /**
+   * URL segment. For the 16 posts migrated from Wix these MUST stay exactly as
+   * they were — the same links are already shared on Facebook and are
+   * redirected here from /post/<slug> (see next.config.ts). A few carry legacy
+   * "pap-" / "en-" prefixes; leave them alone. New posts should use a clean,
+   * prefix-free slug.
+   */
   slug: string;
   title: string;
   /** Short summary, shown on cards and as the article standfirst. */

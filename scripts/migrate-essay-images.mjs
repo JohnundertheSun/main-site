@@ -132,6 +132,42 @@ async function download(url) {
   return Buffer.from(await response.arrayBuffer());
 }
 
+/* --------------------------------------------------------- brand assets --- */
+
+// The logo from the Wix site, so the browser tab keeps the icon Jayburtt's
+// readers already recognise. Next.js uses app/icon.png as the favicon
+// automatically, but the file has to exist locally — it can't be a remote URL.
+const LOGO_WIX_ID = "fc4975_5997414a6f0141b0b5a1426b2daa5e44~mv2.png"; // "LOGO JD.png", 800x800
+
+async function migrateBrandAssets() {
+  const iconPng = path.join(ROOT, "app", "icon.png");
+  const iconTsx = path.join(ROOT, "app", "icon.tsx");
+  const publicLogo = path.join(ROOT, "public", "images", "logo-jd.png");
+
+  if (fs.existsSync(iconPng) && !FORCE) {
+    console.log("→ favicon … already migrated, skipping");
+    return;
+  }
+
+  try {
+    process.stdout.write("→ favicon (LOGO JD.png) … ");
+    const bytes = await download(WIX_BASE + LOGO_WIX_ID);
+
+    fs.writeFileSync(iconPng, bytes);
+    fs.mkdirSync(path.dirname(publicLogo), { recursive: true });
+    fs.writeFileSync(publicLogo, bytes);
+
+    // Only drop the generated placeholder once the real icon is on disk —
+    // Next.js errors if both app/icon.png and app/icon.tsx exist.
+    if (fs.existsSync(iconTsx)) fs.rmSync(iconTsx);
+
+    console.log(`${(bytes.length / 1024).toFixed(0)} KB ✓  (app/icon.png, public/images/logo-jd.png)`);
+  } catch (error) {
+    console.log(`failed — ${error.message}`);
+    console.log("   Keeping the generated placeholder icon for now.");
+  }
+}
+
 async function main() {
   const essays = readEssays();
   if (!essays.length) {
@@ -192,7 +228,9 @@ async function main() {
     console.log("\nFailures:");
     for (const { slug, reason } of failures) console.log(`  ${slug}: ${reason}`);
   }
-  console.log("\nNext: commit lib/essay-images.json and redeploy.");
+  await migrateBrandAssets();
+
+  console.log("\nNext: commit lib/essay-images.json, app/icon.png and public/images/, then redeploy.");
 }
 
 main().catch((error) => {

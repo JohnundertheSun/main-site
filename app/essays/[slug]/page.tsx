@@ -19,7 +19,36 @@ export async function generateMetadata({
   const { slug } = await params;
   const essay = getEssay(slug);
   if (!essay) return { title: "Essay not found — Jayburtt Dijkhoff" };
-  return { title: `${essay.title} — Jayburtt Dijkhoff`, description: essay.excerpt };
+
+  // These posts are already circulating on Facebook under their old Wix URLs.
+  // When someone follows or re-shares one, the preview has to look right, so
+  // each article carries its own Open Graph card.
+  const cover = essayImageUrl(essay.image, essay.slug);
+  const url = `/essays/${essay.slug}`;
+
+  return {
+    title: `${essay.title} — Jayburtt Dijkhoff`,
+    description: essay.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title: essay.title,
+      description: essay.excerpt,
+      publishedTime: essay.date,
+      authors: ["Dr. Jayburtt J. Dijkhoff"],
+      locale: essay.language === "EN" ? "en_US" : "pap_AW",
+      images: cover
+        ? [{ url: cover, width: essay.imageWidth, height: essay.imageHeight, alt: essay.title }]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: essay.title,
+      description: essay.excerpt,
+      images: cover ? [cover] : undefined,
+    },
+  };
 }
 
 export default async function EssayPage({ params }: { params: Promise<{ slug: string }> }) {
