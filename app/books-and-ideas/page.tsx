@@ -3,51 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ESSAYS, essayImageUrl } from "@/lib/essays";
 
 export const metadata: Metadata = {
   title: "Books & Ideas — Jayburtt Dijkhoff",
   description:
     "Books, essays and reflections on rights, systems and what it means to be human inside them — written in clear language, for everyone.",
 };
-
-const ARTICLES = [
-  {
-    tag: "Health",
-    tagBg: "#ece0cb",
-    tagColor: "#5a4a30",
-    title: "Low Risk Is Never Zero Risk: What Aruba Must Know About Hantavirus",
-  },
-  {
-    tag: "Health",
-    tagBg: "#ece0cb",
-    tagColor: "#5a4a30",
-    title: "Extreme Heat Is Coming: How to Prepare Before It Arrives",
-  },
-  {
-    tag: "Reflection",
-    tagBg: "#f2ded2",
-    tagColor: "#a1462a",
-    title: "The Elephant Was Never Pink. It Was Always White.",
-  },
-  {
-    tag: "Law",
-    tagBg: "#dde7e3",
-    tagColor: "#1a6b5c",
-    title: "What AruBIG Recognition Actually Requires",
-  },
-  {
-    tag: "Law",
-    tagBg: "#dde7e3",
-    tagColor: "#1a6b5c",
-    title: "Governance Across the Kingdom: Where Dutch and Caribbean Rules Meet",
-  },
-  {
-    tag: "Reflection",
-    tagBg: "#f2ded2",
-    tagColor: "#a1462a",
-    title: "Reading Your Rights: A Plain-Language Primer",
-  },
-];
 
 export default function BooksAndIdeasPage() {
   return (
@@ -170,39 +132,62 @@ export default function BooksAndIdeasPage() {
           className="container grid-3 reveal reveal-stagger"
           style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 26 }}
         >
-          {ARTICLES.map((post) => (
-            <article
-              key={post.title}
-              className="card-hover"
-              style={{ background: "var(--color-offwhite)", borderRadius: 20, overflow: "hidden", boxShadow: "0 14px 32px #00000012" }}
-            >
-              <div className="article-thumb" style={{ width: "100%", height: 180 }}>
-                Article image
-              </div>
-              <div style={{ padding: 26 }}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    padding: "4px 12px",
-                    background: post.tagBg,
-                    borderRadius: 12,
-                    fontSize: 11,
-                    fontWeight: 600,
-                    color: post.tagColor,
-                    marginBottom: 12,
-                  }}
-                >
-                  {post.tag}
-                </span>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, margin: "0 0 10px", lineHeight: 1.4 }}>
-                  {post.title}
-                </h3>
-                <a href="#" className="text-link" style={{ fontSize: 13.5 }}>
-                  Read More →
-                </a>
-              </div>
-            </article>
-          ))}
+          {ESSAYS.map((post) => {
+            const cover = essayImageUrl(post.image);
+            return (
+              <Link
+                key={post.slug}
+                href={`/essays/${post.slug}`}
+                className="card-hover"
+                style={{
+                  background: "var(--color-offwhite)",
+                  borderRadius: 20,
+                  overflow: "hidden",
+                  boxShadow: "0 14px 32px #00000012",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {cover ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={cover}
+                    alt=""
+                    style={{ width: "100%", height: 180, objectFit: "cover", display: "block" }}
+                  />
+                ) : (
+                  <div className="article-thumb" style={{ width: "100%", height: 180 }} />
+                )}
+                <div style={{ padding: 26, display: "flex", flexDirection: "column", flexGrow: 1 }}>
+                  <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
+                    <span
+                      style={{
+                        display: "inline-block",
+                        padding: "4px 12px",
+                        background: post.language === "EN" ? "#dde5f0" : "#f2e0d2",
+                        borderRadius: 12,
+                        fontSize: 11,
+                        fontWeight: 600,
+                        color: post.language === "EN" ? "#17325a" : "#a1462a",
+                      }}
+                    >
+                      {post.language === "EN" ? "English" : "Papiamento"}
+                    </span>
+                    <span style={{ fontSize: 12, color: "var(--color-faint)" }}>{post.minutes} min</span>
+                  </div>
+                  <h3 style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 600, margin: "0 0 10px", lineHeight: 1.4 }}>
+                    {post.title}
+                  </h3>
+                  <p style={{ fontSize: 13.5, lineHeight: 1.6, color: "var(--color-muted)", margin: "0 0 16px", flexGrow: 1 }}>
+                    {post.excerpt.length > 130 ? post.excerpt.slice(0, 130).trimEnd() + "…" : post.excerpt}
+                  </p>
+                  <span className="text-link" style={{ fontSize: 13.5 }}>
+                    Read More →
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
