@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+#
+# Refuses a push to main unless you currently hold the baton.
+#
+# Enabled by scripts/setup.sh, which points core.hooksPath at .githooks. If a
+# collaborator never runs setup, this hook simply does not run for them, which
+# is why COLLABORATION.md still describes the protocol in words. The hook is a
+# safety net, not the only line of defence.
+#
+# Pushes to any branch other than main pass straight through. Branches do not
+# deploy, so they cannot break the live site.
+
+set -euo pipefail
+
+BATON_FILE="ACTIVE-WORK.md"
+PROTECTED_BRANCH="main"
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+# ---------------------------------------------------------------------------
+# Is this push touching main at all?
+#
+# Git feeds "<local ref> <local sha> <remote ref> <remote sha>" on stdin, one
+# line per ref being pushed.
+# ---------------------------------------------------------------------------
+
+pushing_main=0
+deleting_main=0
+
+while read -r _local_ref local_sha remote_ref _remote_sha; do
+  [ -z "${remote_ref:-}" ] && continue
+  if [ "$remote_ref" = "refs/heads/$PROTECTED_BRANCH" ]; then
+    pushing_main=1
+    # An all-zero local sha means "delete this branch".
+    case "$local_sha" in
+      *[!0]*) ;;
+      *) deleting_main=1 ;;
+    esac
+  fi
+done
+
+if [ "$pushing_main" -eq 0 ]; then
+  exit 0
+fi
+
+if [ "$deleting_main" -eq 1 ]; then
+  echo "BLOCKED: refusing to delete the $PROTECTED_BRANCH branch." >&2
+  exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# Who am I?
+# ---------------------------------------------------------------------------
+
+me="$(git config --get collab.who || true)"
+
+if [ -z "$me" ]; then
+  cat >&2 <<'EOF'
+
+BLOCKED: this repository does not know who you are.
+
+  Run the one-time setup first:
+
+      bash scripts/setup.sh
+
+  It asks for a short handle so the baton can tell collaborators apart.
+
+EOF
+  exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# Who holds the baton, according to the version I am about to push?
+# ---------------------------------------------------------------------------
+
+if [ ! -f "$BATON_FILE" ]; then
+  echo "BLOCKED: $BATON_FILE is missing. Run: git pull --rebase" >&2
+  exit 1
+fi
+
+holder="$(grep -m1 '^HOLDER:' "$BATON_FILE" | sed 's/^HOLDER:[[:space:]]*//' | tr -d '[:space:]')"
+doing="$(grep -m1 '^DOING:' "$BATON_FILE" | sed 's/^DOING:[[:space:]]*//')"
+since="$(grep -m1 '^SINCE:' "$BATON_FILE" | sed 's/^SINCE:[[:space:]]*//' | tr -d '[:space:]')"
+
+# "none" means this is a release push. Always allowed: handing the baton back
+# must never be something you can get locked out of.
+if [ "$holder" = "none" ]; then
+  exit 0
+fi
+
+if [ "$holder" != "$me" ]; then
+  cat >&2 <<EOF
+
+BLOCKED: $holder currently holds the baton, not you ($me).
+
+  Since:  $since
+  Doing:  $doing
+
+  Message them before pushing. If they are unreachable and you have to
+  take over:
+
+      bash scripts/claim.sh "reason for taking over" --force
+
+  Then tell them, so they pull before continuing.
+
+EOF
+  exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# I hold the baton. Am I actually up to date with main?
+#
+# Pushing while behind means either a rejected push or a merge nobody looked
+# at. Catch it here, where the fix is one command.
+# ---------------------------------------------------------------------------
+
+if git fetch --quiet origin "$PROTECTED_BRANCH" 2>/dev/null; then
+  behind="$(git rev-list --count "HEAD..origin/$PROTECTED_BRANCH" 2>/dev/null || echo 0)"
+  if [ "${behind:-0}" -gt 0 ]; then
+    cat >&2 <<EOF
+
+BLOCKED: origin/$PROTECTED_BRANCH has $behind commit(s) you do not have.
+
+  Bring them in, check your work still makes sense on top, then push:
+
+      git pull --rebase
+
+  Do not use --force.
+
+EOF
+    exit 1
+  fi
+fi
+
+exit 0
