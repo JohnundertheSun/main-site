@@ -133,7 +133,7 @@ export default function BooksAndIdeasPage() {
           style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 26 }}
         >
           {ESSAYS.map((post) => {
-            const cover = essayImageUrl(post.image);
+            const cover = essayImageUrl(post.image, post.slug);
             return (
               <Link
                 key={post.slug}

@@ -28,7 +28,7 @@ export default async function EssayPage({ params }: { params: Promise<{ slug: st
   if (!essay) notFound();
 
   const body = getEssayBody(slug);
-  const cover = essayImageUrl(essay.image);
+  const cover = essayImageUrl(essay.image, essay.slug);
   const date = new Date(essay.date).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",

@@ -21,9 +21,23 @@ export type Essay = {
   imageHeight?: number;
 };
 
+import migratedImages from "./essay-images.json";
+
 export const WIX_MEDIA_BASE = "https://static.wixstatic.com/media/";
 
-export function essayImageUrl(id?: string): string | null {
+/**
+ * Resolves a cover image URL.
+ *
+ * Prefers an image already migrated to our own storage (see
+ * scripts/migrate-essay-images.mjs), and falls back to the original Wix CDN
+ * URL for anything not migrated yet. Once every essay appears in
+ * essay-images.json, the site no longer depends on the Wix account existing.
+ */
+export function essayImageUrl(id?: string, slug?: string): string | null {
+  if (slug) {
+    const migrated = (migratedImages as Record<string, string>)[slug];
+    if (migrated) return migrated;
+  }
   return id ? WIX_MEDIA_BASE + id : null;
 }
 
