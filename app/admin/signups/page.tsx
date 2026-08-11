@@ -11,14 +11,22 @@ type Signup = {
   phone: string | null;
   status: string;
   notes: string | null;
+  // Added in migration 20260811120000. Optional on the type so this page still
+  // renders against a database where that migration has not been applied yet.
+  organization?: string | null;
+  reason?: string | null;
+  source_path?: string | null;
 };
 
 async function loadSignups(): Promise<{ signups: Signup[]; error: string | null }> {
   try {
     const supabase = getSupabaseServerClient();
+    // select("*") rather than a column list: a list naming a column that does
+    // not exist yet fails the whole query, which would take the admin page down
+    // over a pending migration.
     const { data, error } = await supabase
       .from("program_signups")
-      .select("id, created_at, program, name, email, phone, status, notes")
+      .select("*")
       .order("created_at", { ascending: false });
 
     if (error) return { signups: [], error: error.message };
@@ -97,6 +105,8 @@ export default async function AdminSignupsPage() {
                 <th style={{ padding: "14px 18px" }}>Name</th>
                 <th style={{ padding: "14px 18px" }}>Email</th>
                 <th style={{ padding: "14px 18px" }}>Phone</th>
+                <th style={{ padding: "14px 18px" }}>Organization</th>
+                <th style={{ padding: "14px 18px" }}>About</th>
                 <th style={{ padding: "14px 18px" }}>Message</th>
                 <th style={{ padding: "14px 18px" }}>Status</th>
               </tr>
@@ -107,7 +117,14 @@ export default async function AdminSignupsPage() {
                   <td style={{ padding: "14px 18px", whiteSpace: "nowrap", color: "var(--color-faint)" }}>
                     {new Date(s.created_at).toLocaleString()}
                   </td>
-                  <td style={{ padding: "14px 18px" }}>{s.program}</td>
+                  <td style={{ padding: "14px 18px" }}>
+                    {s.program}
+                    {s.source_path && (
+                      <div style={{ fontSize: 12, color: "var(--color-faint)", marginTop: 2 }}>
+                        {s.source_path}
+                      </div>
+                    )}
+                  </td>
                   <td style={{ padding: "14px 18px", fontWeight: 600 }}>{s.name}</td>
                   <td style={{ padding: "14px 18px" }}>
                     <a href={`mailto:${s.email}`} className="text-link">
@@ -115,6 +132,10 @@ export default async function AdminSignupsPage() {
                     </a>
                   </td>
                   <td style={{ padding: "14px 18px", whiteSpace: "nowrap" }}>{s.phone ?? "—"}</td>
+                  <td style={{ padding: "14px 18px" }}>{s.organization ?? "—"}</td>
+                  <td style={{ padding: "14px 18px", fontSize: 13.5, color: "var(--color-muted)" }}>
+                    {s.reason ?? "—"}
+                  </td>
                   <td style={{ padding: "14px 18px", maxWidth: 320, whiteSpace: "pre-wrap", color: "var(--color-muted)", fontSize: 13.5 }}>
                     {s.notes ?? "—"}
                   </td>
@@ -137,7 +158,7 @@ export default async function AdminSignupsPage() {
               ))}
               {signups.length === 0 && !error && (
                 <tr>
-                  <td colSpan={7} style={{ padding: "32px 18px", textAlign: "center", color: "var(--color-faint)" }}>
+                  <td colSpan={9} style={{ padding: "32px 18px", textAlign: "center", color: "var(--color-faint)" }}>
                     No signups yet.
                   </td>
                 </tr>

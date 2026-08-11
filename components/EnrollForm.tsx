@@ -56,6 +56,7 @@ export default function EnrollForm({
               name: data.get("name"),
               email: data.get("email"),
               phone: data.get("phone"),
+              sourcePath: window.location.pathname,
             }),
           });
           const json = await res.json();

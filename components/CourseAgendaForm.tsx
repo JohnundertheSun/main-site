@@ -50,6 +50,7 @@ export default function CourseAgendaForm() {
               program: "course-agenda",
               name: data.get("name"),
               email: data.get("email"),
+              sourcePath: window.location.pathname,
             }),
           });
           const json = await res.json();

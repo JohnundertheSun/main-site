@@ -56,14 +56,12 @@ export default function ContactForm() {
               program: "contact",
               name: data.get("name"),
               email: data.get("email"),
-              notes: [
-                `Reason: ${reason}`,
-                organization ? `Organization: ${organization}` : null,
-                "",
-                message,
-              ]
-                .filter((line) => line !== null)
-                .join("\n"),
+              // Reason and organization are their own columns now, so they can
+              // be filtered and counted rather than buried in the message.
+              reason,
+              organization: organization || null,
+              notes: message,
+              sourcePath: window.location.pathname,
             }),
           });
           const json = await res.json();
