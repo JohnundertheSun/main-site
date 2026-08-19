@@ -1,5 +1,6 @@
 import "server-only";
 import { SITE_URL } from "@/lib/site";
+import { getCourse } from "@/lib/courses";
 
 /**
  * Email templates.
@@ -207,11 +208,17 @@ export function visitorConfirmation(signup: SignupDetails): {
       ? `Thanks ${escapeHtml(firstName)} — you'll be the first to hear when new course dates and founding-cohort places open up.`
       : `Thanks ${escapeHtml(firstName)}. Your place for <strong style="color:${INK};">${escapeHtml(signup.programLabel)}</strong> is reserved while we get in touch with the details.`;
 
+  // A course with a pay link can be paid for right now; one without still gets
+  // the manual follow-up promise, so neither case reads as a dead end.
+  const payUrl = isContact || isAgenda ? undefined : getCourse(signup.program)?.paymentUrl;
+
   const next = isContact
     ? null
     : isAgenda
       ? null
-      : `The next step is a secure payment link, sent to this address, which confirms your enrollment. Nothing has been charged yet.`;
+      : payUrl
+        ? `One step is left: complete the payment below and your access is confirmed. Nothing has been charged yet.`
+        : `The next step is a secure payment link, sent to this address, which confirms your enrollment. Nothing has been charged yet.`;
 
   const html = layout({
     heading,
@@ -220,7 +227,7 @@ export function visitorConfirmation(signup: SignupDetails): {
       paragraph(lead) +
       (next ? paragraph(next) : "") +
       paragraph("If any of this looks wrong, just reply to this email.") +
-      button("Back to the site", SITE_URL),
+      (payUrl ? button("Complete your payment", payUrl) : button("Back to the site", SITE_URL)),
   });
 
   const text = [
@@ -234,7 +241,7 @@ export function visitorConfirmation(signup: SignupDetails): {
     next ? `\n${next}` : null,
     "",
     "If any of this looks wrong, just reply to this email.",
-    SITE_URL,
+    payUrl ? `Complete your payment: ${payUrl}` : SITE_URL,
   ]
     .filter((line) => line !== null)
     .join("\n");

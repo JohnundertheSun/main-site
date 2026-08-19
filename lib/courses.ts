@@ -28,6 +28,12 @@ export type Course = {
   audience?: string;
   /** Path under /public, or omit for the neutral placeholder treatment. */
   image?: string;
+  /**
+   * Wix pay link for this course. Checkout still runs on Wix, where CX Pay is
+   * connected; the site collects the signup and then hands the buyer this
+   * link. Omit while a course has no way to pay yet.
+   */
+  paymentUrl?: string;
 };
 
 export const LANGUAGE_LABELS: Record<CourseLanguage, string> = {
@@ -57,6 +63,7 @@ export const COURSES: Course[] = [
     audience:
       "Anyone facing a system with more power than they have — government offices, healthcare institutions, insurance, or employers.",
     image: "/images/portrait-speaking.png",
+    paymentUrl: "https://www.jayburttdijkhoff.com/_paylink/AaAYh9zO",
   },
 
   // ---------------------------------------------------------------------

@@ -6,10 +6,13 @@ export default function EnrollForm({
   program,
   price,
   ctaLabel = "Reserve My Spot",
+  paymentUrl,
 }: {
   program: string;
   price: string;
   ctaLabel?: string;
+  /** Wix pay link. Present means the buyer can pay immediately. */
+  paymentUrl?: string;
 }) {
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
   const [error, setError] = useState("");
@@ -29,12 +32,28 @@ export default function EnrollForm({
         }}
       >
         <h3 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, margin: "0 0 10px" }}>
-          You&apos;re on the list
+          {paymentUrl ? "You're registered" : "You're on the list"}
         </h3>
-        <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "var(--color-muted)" }}>
-          We&apos;ll follow up with a secure payment link to complete your enrollment for{" "}
-          {price}.
-        </p>
+        {paymentUrl ? (
+          <>
+            <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "var(--color-muted)", marginBottom: 20 }}>
+              One step left: complete the {price} payment and your access is confirmed. The same
+              link is in the email we just sent, so you can also finish this later.
+            </p>
+            <a
+              href={paymentUrl}
+              className="btn btn-primary"
+              style={{ padding: "14px 30px", fontSize: 15, display: "inline-block" }}
+            >
+              Pay {price} now
+            </a>
+          </>
+        ) : (
+          <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "var(--color-muted)" }}>
+            We&apos;ll follow up with a secure payment link to complete your enrollment for{" "}
+            {price}.
+          </p>
+        )}
       </div>
     );
   }

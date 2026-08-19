@@ -248,7 +248,11 @@ export default async function CoursePage({ params }: { params: Promise<{ slug: s
             </p>
           </div>
           <div style={{ maxWidth: 420, margin: "0 auto" }}>
-            <EnrollForm program={course.slug} price={course.price ?? ""} />
+            <EnrollForm
+              program={course.slug}
+              price={course.price ?? ""}
+              paymentUrl={course.paymentUrl}
+            />
           </div>
         </section>
       ) : (
