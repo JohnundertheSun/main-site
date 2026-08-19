@@ -8,6 +8,6 @@ which keep the format the pre-push hook expects.
 
 <!-- The lines below are read by .githooks/pre-push. Keep the format exactly. -->
 
-HOLDER: claude-agent
-SINCE: 2026-08-19T07:00:43Z
-DOING: Admin essay editor, PDF uploads, and the Wix sync script
+HOLDER: none
+SINCE: -
+DOING: -
