@@ -8,6 +8,6 @@ which keep the format the pre-push hook expects.
 
 <!-- The lines below are read by .githooks/pre-push. Keep the format exactly. -->
 
-HOLDER: claude-agent
-SINCE: 2026-08-19T06:29:08Z
-DOING: Rebuilding the blog: full essay migration, categories/tags, comments, likes, share
+HOLDER: none
+SINCE: -
+DOING: -
