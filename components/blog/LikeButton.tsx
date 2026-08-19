@@ -1,8 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useState, useSyncExternalStore } from "react";
 
 const VISITOR_KEY = "jd_visitor_id";
+
+/**
+ * Whether this device has already liked this post.
+ *
+ * useSyncExternalStore rather than an effect: localStorage is browser-only, so
+ * this renders unliked on the server and settles on the stored value during
+ * hydration, instead of flashing through a second render.
+ */
+function useStoredLike(slug: string): [boolean, (liked: boolean) => void] {
+  const key = `jd_liked_${slug}`;
+
+  const subscribe = useCallback((onChange: () => void) => {
+    // Fires when another tab likes the same post.
+    window.addEventListener("storage", onChange);
+    return () => window.removeEventListener("storage", onChange);
+  }, []);
+
+  const stored = useSyncExternalStore(
+    subscribe,
+    () => localStorage.getItem(key) === "1",
+    () => false
+  );
+
+  // This tab's own writes do not raise a storage event, so they are tracked here.
+  const [local, setLocal] = useState<boolean | null>(null);
+
+  const set = useCallback(
+    (liked: boolean) => {
+      localStorage.setItem(key, liked ? "1" : "0");
+      setLocal(liked);
+    },
+    [key]
+  );
+
+  return [local ?? stored, set];
+}
 
 /** A stable random id for this browser, used so one device counts once. */
 function visitorId(): string {
@@ -22,12 +58,8 @@ export default function LikeButton({
   initialLikes: number;
 }) {
   const [likes, setLikes] = useState(initialLikes);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useStoredLike(slug);
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    setLiked(localStorage.getItem(`jd_liked_${slug}`) === "1");
-  }, [slug]);
 
   async function toggle() {
     if (busy) return;
@@ -44,7 +76,6 @@ export default function LikeButton({
       });
       const json = await res.json();
       if (json.ok && typeof json.likes === "number") setLikes(json.likes);
-      localStorage.setItem(`jd_liked_${slug}`, next ? "1" : "0");
     } catch {
       // Roll back to what the reader saw before the click.
       setLiked(!next);

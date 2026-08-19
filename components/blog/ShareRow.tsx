@@ -1,20 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { SITE_URL } from "@/lib/site";
 
 /**
  * Share buttons for an article.
  *
  * WhatsApp comes first deliberately: on Aruba it is where these pieces
  * actually travel, ahead of Facebook and well ahead of X.
+ *
+ * The canonical URL is shared rather than whatever sits in the address bar,
+ * which keeps tracking parameters out of a shared link. SITE_URL already
+ * follows preview deployments.
  */
 export default function ShareRow({ title, path }: { title: string; path: string }) {
-  const [url, setUrl] = useState(`https://www.jayburttdijkhoff.com${path}`);
+  const url = `${SITE_URL}${path}`;
   const [copied, setCopied] = useState(false);
-
-  useEffect(() => {
-    setUrl(window.location.href);
-  }, []);
 
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
