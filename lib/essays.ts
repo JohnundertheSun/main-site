@@ -26,7 +26,86 @@ export type Essay = {
   image?: string;
   imageWidth?: number;
   imageHeight?: number;
+  /** Category slugs, from CATEGORIES. A post usually has exactly one. */
+  categories?: string[];
+  /** Tag slugs, from TAGS. */
+  tags?: string[];
 };
+
+export type Taxonomy = {
+  slug: string;
+  label: string;
+};
+
+/**
+ * Categories and tags carried over from the Wix blog, so the archive keeps the
+ * same groupings readers and search engines already saw there. Order is the
+ * display order on the blog index.
+ */
+export const CATEGORIES: Taxonomy[] = [
+  { slug: "healthcare-patients-rights", label: "Healthcare & Patients' rights" },
+  { slug: "autonomy-and-governance", label: "Autonomy and Governance" },
+  { slug: "aruba-society", label: "Aruba & Society" },
+  { slug: "power-leadership", label: "Power & Leadership" },
+  { slug: "entre-luz-y-sombra", label: "Entre Luz y Sombra" },
+  { slug: "opinion-reflection", label: "Opinion & Reflection" },
+];
+
+export const TAGS: Taxonomy[] = [
+  { slug: "papiamento", label: "Papiamento" },
+  { slug: "governance", label: "Governance" },
+  { slug: "patients-rights", label: "Patients rights" },
+  { slug: "aruba", label: "Aruba" },
+  { slug: "healthcare", label: "Healthcare" },
+  { slug: "autonomy", label: "Autonomy" },
+  { slug: "english", label: "English" },
+  { slug: "leadership", label: "Leadership" },
+];
+
+export const AUTHOR = {
+  name: "Dr. Jayburtt J. Dijkhoff",
+  role: "Expert in Health Law, Healthcare Quality and Social Reflection",
+} as const;
+
+export function getCategory(slug: string): Taxonomy | undefined {
+  return CATEGORIES.find((c) => c.slug === slug);
+}
+
+export function getTag(slug: string): Taxonomy | undefined {
+  return TAGS.find((t) => t.slug === slug);
+}
+
+export function essaysInCategory(slug: string): Essay[] {
+  return ESSAYS.filter((e) => e.categories?.includes(slug));
+}
+
+export function essaysWithTag(slug: string): Essay[] {
+  return ESSAYS.filter((e) => e.tags?.includes(slug));
+}
+
+/** Categories that actually have posts, for menus that should not show dead ends. */
+export function activeCategories(): Taxonomy[] {
+  return CATEGORIES.filter((c) => essaysInCategory(c.slug).length > 0);
+}
+
+export function activeTags(): Taxonomy[] {
+  return TAGS.filter((t) => essaysWithTag(t.slug).length > 0);
+}
+
+/**
+ * Up to `limit` other essays to read next: same category first, then the most
+ * recent of anything else, so the end of an article is never a dead end.
+ */
+export function relatedEssays(slug: string, limit = 3): Essay[] {
+  const essay = getEssay(slug);
+  if (!essay) return [];
+  const others = ESSAYS.filter((e) => e.slug !== slug);
+  const sameCategory = others.filter((e) =>
+    e.categories?.some((c) => essay.categories?.includes(c))
+  );
+  const rest = others.filter((e) => !sameCategory.includes(e));
+  return [...sameCategory, ...rest].slice(0, limit);
+}
 
 import migratedImages from "./essay-images.json";
 
@@ -50,6 +129,20 @@ export function essayImageUrl(id?: string, slug?: string): string | null {
 
 export const ESSAYS: Essay[] = [
   {
+    slug: "pap-awe-ta-nan-porta-mañan-por-ta-esun-di-bo",
+    title: "Awe ta nan porta. Mañan por ta esun di bo",
+    excerpt:
+      "Bo cas mester ta e unico luga unda bo ta sinti bo mes sigur. Pero na Tanki Leendert, famianan inocente a lanta cu porta kibra, arma apunta riba nan, y miedo den nan curason.",
+    date: "2026-08-19",
+    minutes: 2,
+    language: "PAP",
+    image: "fc4975_d258ab5ce1ad4b5fb1d0216c55c5e936~mv2.png",
+    imageWidth: 1672,
+    imageHeight: 941,
+    categories: ["autonomy-and-governance"],
+    tags: ["papiamento", "governance"],
+  },
+  {
     slug: "poco-riesgo-no-ta-cero-riesgo-kico-aruba-mester-di-dvg-pa-hantavirus-aworaki",
     title: "Poco riesgo no ta cero riesgo: Kico Aruba mester di DVG pa Hantavirus aworaki",
     excerpt:
@@ -60,6 +153,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_5622601282b945c088b3968e72ce06d7~mv2.png",
     imageWidth: 1080,
     imageHeight: 1350,
+    categories: ["healthcare-patients-rights"],
+    tags: ["papiamento","patients-rights","aruba"],
   },
   {
     slug: "calor-fuerte-ta-yega-prepara-calor-y-secura-2026",
@@ -72,6 +167,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_26f252e237094a7aaca8389b542e8903~mv2.png",
     imageWidth: 1536,
     imageHeight: 1024,
+    categories: ["aruba-society"],
+    tags: ["papiamento","aruba"],
   },
   {
     slug: "the-elephant-was-never-pink-hospitals-fusion-aruba",
@@ -84,6 +181,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_d9e375f8d0f04918b36fc94a5549c006~mv2.png",
     imageWidth: 1402,
     imageHeight: 1122,
+    categories: ["healthcare-patients-rights"],
+    tags: ["healthcare","english","patients-rights"],
   },
   {
     slug: "e-olifanti-no-ta-ros-fusion-hospitalnan-aruba",
@@ -96,6 +195,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_01945ba6ed294509ace25757ad379a8b~mv2.png",
     imageWidth: 1402,
     imageHeight: 1122,
+    categories: ["healthcare-patients-rights"],
+    tags: ["healthcare","governance","patients-rights","papiamento"],
   },
   {
     slug: "transparencia-den-gobierno-di-aruba",
@@ -108,6 +209,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_31067a5dd654409cb45746b440599f20~mv2.png",
     imageWidth: 1536,
     imageHeight: 1024,
+    categories: ["autonomy-and-governance"],
+    tags: ["papiamento"],
   },
   {
     slug: "pap-hofa-un-decision-pa-autonomia-berdadero-parti-3-hofa-aruba-sindicatonan",
@@ -120,6 +223,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_36840255daa9424b83fa9609dd930a9d~mv2.png",
     imageWidth: 1200,
     imageHeight: 630,
+    categories: ["autonomy-and-governance"],
+    tags: ["papiamento","autonomy","aruba","governance"],
   },
   {
     slug: "pap-ora-e-sistema-faya-un-pashent-sin-azv-sin-c-e-sa",
@@ -132,6 +237,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_8df5c2e170374fac9c8d1e584adde97f~mv2.png",
     imageWidth: 1408,
     imageHeight: 683,
+    categories: ["healthcare-patients-rights"],
+    tags: ["papiamento","governance","healthcare","patients-rights","aruba"],
   },
   {
     slug: "en-when-systems-don-t-speak-a-patient-left-without-health-coverage",
@@ -144,6 +251,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_50edb02a9ed14e9f9cd206d1032d199c~mv2.jpg",
     imageWidth: 2810,
     imageHeight: 1440,
+    categories: ["healthcare-patients-rights"],
+    tags: ["english","governance","healthcare","aruba"],
   },
   {
     slug: "proteccion-pa-pashent-cu-aparato-medico-parti-3",
@@ -156,6 +265,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_a65ea62d569f4fe09ca2b9846d65e36f~mv2.jpg",
     imageWidth: 2325,
     imageHeight: 1505,
+    categories: ["healthcare-patients-rights"],
+    tags: ["papiamento","governance","healthcare","patients-rights"],
   },
   {
     slug: "mi-pareha-ta-controlami-y-mi-whatsapp-kico-mi-por-haci",
@@ -168,6 +279,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_e6858d23de814cb1a23c107935f5fe7d~mv2.jpg",
     imageWidth: 2652,
     imageHeight: 1536,
+    categories: ["aruba-society"],
+    tags: ["papiamento","autonomy"],
   },
   {
     slug: "proteccion-pa-pashent-cu-aparato-medico-parti-2",
@@ -180,6 +293,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_d8ff75b7abef4a2f913ab3e25eb35d52~mv2.jpg",
     imageWidth: 2487,
     imageHeight: 1536,
+    categories: ["healthcare-patients-rights"],
+    tags: ["papiamento","healthcare","patients-rights","governance"],
   },
   {
     slug: "proteccion-pa-pashent-cu-aparato-medico-parti-1",
@@ -192,6 +307,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_621b7fe2ed1e41a89725eae28a1ae7b0~mv2.jpg",
     imageWidth: 2667,
     imageHeight: 1536,
+    categories: ["healthcare-patients-rights"],
+    tags: ["papiamento","patients-rights","governance"],
   },
   {
     slug: "malpractice-101",
@@ -204,6 +321,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_9132ce6a884c44b1a543007cb7de9fec~mv2.avif",
     imageWidth: 1024,
     imageHeight: 1536,
+    categories: ["healthcare-patients-rights"],
+    tags: ["english","healthcare","patients-rights"],
   },
   {
     slug: "hofa-un-decision-pa-autonomia-berdadero-parti-2",
@@ -216,6 +335,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_d26eb90884b74241b089ea7db22b802c~mv2.png",
     imageWidth: 1536,
     imageHeight: 1024,
+    categories: ["autonomy-and-governance"],
+    tags: ["papiamento","aruba","autonomy","governance"],
   },
   {
     slug: "en-hofa-a-decision-for-real-autonomy-part-1",
@@ -228,6 +349,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_64f9fd9736ca40a9a4f81a1df4869c2a~mv2.png",
     imageWidth: 1582,
     imageHeight: 1685,
+    categories: ["autonomy-and-governance"],
+    tags: ["english","aruba","autonomy","governance"],
   },
   {
     slug: "hofa-un-decision-pa-autonomia-berdadero-parti-1",
@@ -240,6 +363,8 @@ export const ESSAYS: Essay[] = [
     image: "fc4975_77911a9d6e7e4285a9c9bc71392fa82e~mv2.jpg",
     imageWidth: 2574,
     imageHeight: 1536,
+    categories: [],
+    tags: ["papiamento","autonomy","governance","aruba"],
   },
 ];
 
