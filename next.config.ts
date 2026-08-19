@@ -25,12 +25,24 @@ const nextConfig: NextConfig = {
       // then still resolves.
       { source: "/single-post/:slug", destination: "/essays/:slug", permanent: true },
 
-      // The blog index and Wix's category/tag archives all now live in one
-      // place. These are prefix rules, so /blog/anything is covered too.
-      { source: "/blog", destination: "/books-and-ideas", permanent: true },
-      { source: "/blog/:path*", destination: "/books-and-ideas", permanent: true },
-      { source: "/categories/:path*", destination: "/books-and-ideas", permanent: true },
-      { source: "/tags/:path*", destination: "/books-and-ideas", permanent: true },
+      // Wix's own archives map onto the rebuilt ones, which kept the same
+      // slugs. /blog is a real section now, so it is deliberately NOT
+      // redirected — a rule here would shadow the whole thing.
+      { source: "/categories", destination: "/blog", permanent: true },
+      { source: "/tags", destination: "/blog", permanent: true },
+      { source: "/categories/:slug", destination: "/blog/category/:slug", permanent: true },
+      { source: "/tags/:slug", destination: "/blog/tag/:slug", permanent: true },
+
+      // --- Payment links ----------------------------------------------------
+      // Checkout still runs on Wix, where CX Pay is connected, but this domain
+      // now resolves to Vercel, so /_paylink/... would 404 here. Forward it to
+      // the Wix-hosted address of the same site so a pay link keeps working.
+      // Temporary on purpose: it goes away when checkout moves onto this site.
+      {
+        source: "/_paylink/:path*",
+        destination: "https://optimizeyourvibe.wixsite.com/site/_paylink/:path*",
+        permanent: false,
+      },
     ];
   },
 };

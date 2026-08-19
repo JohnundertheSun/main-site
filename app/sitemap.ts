@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { COURSES } from "@/lib/courses";
-import { ESSAYS } from "@/lib/essays";
+import { ESSAYS, activeCategories, activeTags } from "@/lib/essays";
 import { SITE_URL } from "@/lib/site";
 
 /**
@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/courses",
     "/in-house-training",
     "/performances",
+    "/blog",
     "/books-and-ideas",
     "/advisory",
     "/contact",
@@ -40,5 +41,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...pages, ...courses, ...essays];
+  // Archive pages, so the groupings readers used on the Wix blog stay
+  // indexable under their new URLs.
+  const archives = [
+    ...activeCategories().map((c) => `/blog/category/${c.slug}`),
+    ...activeTags().map((t) => `/blog/tag/${t.slug}`),
+  ].map((path) => ({
+    url: `${SITE_URL}${path}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.5,
+  }));
+
+  return [...pages, ...courses, ...essays, ...archives];
 }
