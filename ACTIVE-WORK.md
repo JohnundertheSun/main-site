@@ -8,6 +8,6 @@ which keep the format the pre-push hook expects.
 
 <!-- The lines below are read by .githooks/pre-push. Keep the format exactly. -->
 
-HOLDER: none
-SINCE: -
-DOING: -
+HOLDER: claude-agent
+SINCE: 2026-08-19T07:04:25Z
+DOING: Handoff notes and the admin editor groundwork
